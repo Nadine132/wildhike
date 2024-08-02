@@ -1,22 +1,30 @@
 const express = require("express");
+const userRoutes = require("./routes/userRoutes");
+const rutaRoutes = require("./routes/rutas");
 const { Sequelize } = require("sequelize");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
+const config = require("./config/config.json");
 require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use("/api", userRoutes);
+app.use("/api", rutaRoutes);
+
+const env = process.env.NODE_ENV || "development";
+const dbConfig = config[env];
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
   {
-    host: process.env.DB_HOST,
-    dialect: "postgres",
+    host: dbConfig.host,
+    dialect: dbConfig.dialect,
   }
 );
 
@@ -29,8 +37,17 @@ sequelize
     console.error("Unable to connect to the database:", err);
   });
 
+sequelize
+  .sync({ alter: true })
+  .then(() => {
+    console.log("Database & tables created!");
+  })
+  .catch((err) => {
+    console.error("Error synchronizing the database:", err);
+  });
+
 app.get("/", (req, res) => {
-  res.send("Welcome to WildHike API");
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
