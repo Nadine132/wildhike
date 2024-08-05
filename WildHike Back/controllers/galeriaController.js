@@ -1,5 +1,5 @@
 const Galeria = require("../models/Galeria");
-const Ruta = require("../models/Ruta");
+const Ruta = require("../models/Rutas");
 
 exports.createImage = async (req, res) => {
   try {

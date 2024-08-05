@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const User = require("./User");
-const Ruta = require("./Ruta");
+const Ruta = require("./Rutas");
 
 const RutasRealizadas = sequelize.define("RutasRealizadas", {
   id: {
