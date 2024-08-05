@@ -1,8 +1,8 @@
 {
     "development": {
-      "username": "",
-      "password": "",
-      "database": "",
+      "username": "root",
+      "password": "Ibiza202113",
+      "database": "wildhike",
       "host": "127.0.0.1",
       "dialect": "mysql"
     },
