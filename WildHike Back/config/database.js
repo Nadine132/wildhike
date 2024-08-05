@@ -1,12 +1,8 @@
 const { Sequelize } = require("sequelize");
-const path = require("path");
-const fs = require("fs");
+const config = require("./config.json");
 
-const configPath = path.join(__dirname, "config.json");
-const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
-
-const environment = process.env.NODE_ENV || "development";
-const dbConfig = config[environment];
+const env = process.env.NODE_ENV || "development";
+const dbConfig = config[env];
 
 const sequelize = new Sequelize(
   dbConfig.database,
@@ -17,5 +13,14 @@ const sequelize = new Sequelize(
     dialect: dbConfig.dialect,
   }
 );
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
 
 module.exports = sequelize;

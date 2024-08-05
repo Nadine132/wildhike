@@ -1,55 +1,31 @@
 const express = require("express");
+const sequelize = require("./config/database");
 const userRoutes = require("./routes/userRoutes");
-const rutaRoutes = require("./routes/rutas");
-const { Sequelize } = require("sequelize");
-const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
-const { check, validationResult } = require("express-validator");
-const config = require("./config/config.json");
-require("dotenv").config();
+const rutaRoutes = require("./routes/rutaRoutes");
+const galeriaRoutes = require("./routes/galeriaRoutes");
+const rutasRealizadasRoutes = require("./routes/rutasRealizadasRoutes");
+const comentarioRoutes = require("./routes/comentarioRoutes");
+const favoritoRoutes = require("./routes/favoritoRoutes");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
-app.use("/api", userRoutes);
-app.use("/api", rutaRoutes);
+app.use(express.json());
 
-const env = process.env.NODE_ENV || "development";
-const dbConfig = config[env];
-
-const sequelize = new Sequelize(
-  dbConfig.database,
-  dbConfig.username,
-  dbConfig.password,
-  {
-    host: dbConfig.host,
-    dialect: dbConfig.dialect,
-  }
-);
+app.use("/api/users", userRoutes);
+app.use("/api/rutas", rutaRoutes);
+app.use("/api/galeria", galeriaRoutes);
+app.use("/api/rutas-realizadas", rutasRealizadasRoutes);
+app.use("/api/comentarios", comentarioRoutes);
+app.use("/api/favoritos", favoritoRoutes);
 
 sequelize
-  .authenticate()
+  .sync()
   .then(() => {
-    console.log("Connection has been established successfully.");
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
   })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
   });
-
-sequelize
-  .sync({ alter: true })
-  .then(() => {
-    console.log("Database & tables created!");
-  })
-  .catch((err) => {
-    console.error("Error synchronizing the database:", err);
-  });
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
