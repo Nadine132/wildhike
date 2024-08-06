@@ -1,19 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const rutasRealizadasController = require("../controllers/rutasRealizadasController");
+const RutasRealizadasController = require("../controllers/RutasRealizadasController");
 
-router.post("/rutas-realizadas", rutasRealizadasController.createRutaRealizada);
-router.get(
-  "/rutas-realizadas/usuario/:usuario_id",
-  rutasRealizadasController.getRutasRealizadasByUsuario
-);
-router.get(
-  "/rutas-realizadas",
-  rutasRealizadasController.getAllRutasRealizadas
-);
-router.delete(
-  "/rutas-realizadas/:id",
-  rutasRealizadasController.deleteRutaRealizada
-);
+// Rutas para las rutas realizadas
+router.get("/", RutasRealizadasController.getAllRutasRealizadas);
+router.get("/:id", RutasRealizadasController.getRutasRealizadasById);
+router.post("/", RutasRealizadasController.createRutasRealizadas);
+router.put("/:id", RutasRealizadasController.updateRutasRealizadas);
+router.delete("/:id", RutasRealizadasController.deleteRutasRealizadas);
 
 module.exports = router;

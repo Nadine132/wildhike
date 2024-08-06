@@ -1,31 +1,38 @@
 const express = require("express");
-const sequelize = require("./config/database");
-const userRoutes = require("./routes/userRoutes");
-const rutaRoutes = require("./routes/rutaRoutes");
-const galeriaRoutes = require("./routes/galeriaRoutes");
-const rutasRealizadasRoutes = require("./routes/rutasRealizadasRoutes");
+const app = express();
+const bodyParser = require("body-parser");
+
+// Importar rutas
 const comentarioRoutes = require("./routes/comentarioRoutes");
 const favoritoRoutes = require("./routes/favoritoRoutes");
+const galeriaRoutes = require("./routes/galeriaRoutes");
+const rutaRoutes = require("./routes/rutaRoutes");
+const rutasRealizadasRoutes = require("./routes/rutasRealizadasRoutes");
+const userRoutes = require("./routes/userRoutes");
 
-const app = express();
-const port = process.env.PORT || 3000;
+// Middleware
+app.use(bodyParser.json());
 
-app.use(express.json());
-
-app.use("/api/users", userRoutes);
-app.use("/api/rutas", rutaRoutes);
-app.use("/api/galeria", galeriaRoutes);
-app.use("/api/rutas-realizadas", rutasRealizadasRoutes);
+// Usar rutas
 app.use("/api/comentarios", comentarioRoutes);
 app.use("/api/favoritos", favoritoRoutes);
+app.use("/api/galerias", galeriaRoutes);
+app.use("/api/rutas", rutaRoutes);
+app.use("/api/rutas-realizadas", rutasRealizadasRoutes);
+app.use("/api/usuarios", userRoutes);
 
-sequelize
-  .sync()
-  .then(() => {
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database:", error);
-  });
+// Manejo de errores
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Recurso no encontrado" });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Error en el servidor" });
+});
+
+// Puerto de escucha
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});

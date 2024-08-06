@@ -1,61 +1,73 @@
-const RutasRealizadas = require("../models/RutasRealizadas");
-const User = require("../models/User");
-const Ruta = require("../models/Ruta");
+const { RutasRealizadas } = require("../models");
 
-exports.createRutaRealizada = async (req, res) => {
+// Obtener todas las rutas realizadas
+exports.getAllRutasRealizadas = async (req, res) => {
+  try {
+    const rutasRealizadas = await RutasRealizadas.findAll();
+    res.status(200).json(rutasRealizadas);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Obtener una ruta realizada por ID
+exports.getRutasRealizadasById = async (req, res) => {
+  try {
+    const rutasRealizadas = await RutasRealizadas.findByPk(req.params.id);
+    if (rutasRealizadas) {
+      res.status(200).json(rutasRealizadas);
+    } else {
+      res.status(404).json({ message: "Ruta realizada no encontrada" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Crear una nueva ruta realizada
+exports.createRutasRealizadas = async (req, res) => {
   try {
     const { usuario_id, ruta_id, fechaRealizacion, tiempoRealizacion } =
       req.body;
-    const nuevaRutaRealizada = await RutasRealizadas.create({
+    const newRutasRealizadas = await RutasRealizadas.create({
       usuario_id,
       ruta_id,
       fechaRealizacion,
       tiempoRealizacion,
     });
-    res.status(201).json(nuevaRutaRealizada);
+    res.status(201).json(newRutasRealizadas);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al crear la ruta realizada", error });
+    res.status(500).json({ message: error.message });
   }
 };
 
-exports.getRutasRealizadasByUsuario = async (req, res) => {
-  try {
-    const { usuario_id } = req.params;
-    const rutasRealizadas = await RutasRealizadas.findAll({
-      where: { usuario_id },
-      include: [Ruta],
-    });
-    res.status(200).json(rutasRealizadas);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener las rutas realizadas", error });
-  }
-};
-
-exports.getAllRutasRealizadas = async (req, res) => {
-  try {
-    const rutasRealizadas = await RutasRealizadas.findAll({
-      include: [User, Ruta],
-    });
-    res.status(200).json(rutasRealizadas);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener las rutas realizadas", error });
-  }
-};
-
-exports.deleteRutaRealizada = async (req, res) => {
+// Actualizar una ruta realizada por ID
+exports.updateRutasRealizadas = async (req, res) => {
   try {
     const { id } = req.params;
-    await RutasRealizadas.destroy({ where: { id } });
-    res.status(200).json({ message: "Ruta realizada eliminada con éxito" });
+    const [updated] = await RutasRealizadas.update(req.body, { where: { id } });
+    if (updated) {
+      const updatedRutasRealizadas = await RutasRealizadas.findByPk(id);
+      res.status(200).json(updatedRutasRealizadas);
+    } else {
+      res.status(404).json({ message: "Ruta realizada no encontrada" });
+    }
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al eliminar la ruta realizada", error });
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Eliminar una ruta realizada por ID
+exports.deleteRutasRealizadas = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await RutasRealizadas.destroy({ where: { id } });
+    if (deleted) {
+      res.status(204).end();
+    } else {
+      res.status(404).json({ message: "Ruta realizada no encontrada" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const galeriaController = require("../controllers/galeriaController");
+const GaleriaController = require("../controllers/GaleriaController");
 
-router.post("/images", galeriaController.createImage);
-router.get("/images/ruta/:ruta_id", galeriaController.getImagesByRuta);
-router.get("/images", galeriaController.getAllImages);
-router.delete("/images/:id", galeriaController.deleteImage);
+// Rutas para la galería
+router.get("/", GaleriaController.getAllGalerias);
+router.get("/:id", GaleriaController.getGaleriaById);
+router.post("/", GaleriaController.createGaleria);
+router.put("/:id", GaleriaController.updateGaleria);
+router.delete("/:id", GaleriaController.deleteGaleria);
 
 module.exports = router;

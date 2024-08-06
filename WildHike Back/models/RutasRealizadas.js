@@ -1,34 +1,44 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-const User = require("./User");
-const Ruta = require("./Ruta");
 
-const RutasRealizadas = sequelize.define("RutasRealizadas", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  usuario_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User,
-      key: "id",
+module.exports = (sequelize, DataTypes) => {
+  const RutasRealizadas = sequelize.define("RutasRealizadas", {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
-  },
-  ruta_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Ruta,
-      key: "id",
+    usuario_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Usuarios",
+        key: "id",
+      },
     },
-  },
-  fechaRealizacion: {
-    type: DataTypes.DATE,
-  },
-  tiempoRealizacion: {
-    type: DataTypes.DECIMAL(5, 2),
-  },
-});
+    ruta_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Ruta",
+        key: "id",
+      },
+    },
+    fechaRealizacion: {
+      type: DataTypes.DATE,
+    },
+    tiempoRealizacion: {
+      type: DataTypes.DECIMAL(5, 2),
+    },
+  });
 
-module.exports = RutasRealizadas;
+  RutasRealizadas.associate = (models) => {
+    RutasRealizadas.belongsTo(models.User, {
+      foreignKey: "usuario_id",
+      as: "usuario",
+    });
+    RutasRealizadas.belongsTo(models.Ruta, {
+      foreignKey: "ruta_id",
+      as: "ruta",
+    });
+  };
+
+  return RutasRealizadas;
+};

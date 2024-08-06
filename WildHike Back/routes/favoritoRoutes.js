@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const favoritoController = require("../controllers/favoritoController");
+const FavoritoController = require("../controllers/FavoritoController");
 
-router.post("/favoritos", favoritoController.createFavorito);
-router.get("/favoritos", favoritoController.getAllFavoritos);
-router.get("/favoritos/:id", favoritoController.getFavoritoById);
-router.put("/favoritos/:id", favoritoController.updateFavorito);
-router.delete("/favoritos/:id", favoritoController.deleteFavorito);
+// Rutas para los favoritos
+router.get("/", FavoritoController.getAllFavoritos);
+router.get("/:id", FavoritoController.getFavoritoById);
+router.post("/", FavoritoController.createFavorito);
+router.put("/:id", FavoritoController.updateFavorito);
+router.delete("/:id", FavoritoController.deleteFavorito);
 
 module.exports = router;

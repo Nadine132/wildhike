@@ -1,41 +1,71 @@
-const Galeria = require("../models/Galeria");
-const Ruta = require("../models/Ruta");
+const { Galeria } = require("../models");
 
-exports.createImage = async (req, res) => {
+// Obtener todas las imágenes de la galería
+exports.getAllGalerias = async (req, res) => {
   try {
-    const { ruta_id, url_imagen } = req.body;
-    const nuevaImagen = await Galeria.create({ ruta_id, url_imagen });
-    res.status(201).json(nuevaImagen);
+    const galerias = await Galeria.findAll();
+    res.status(200).json(galerias);
   } catch (error) {
-    res.status(500).json({ message: "Error al crear la imagen", error });
+    res.status(500).json({ message: error.message });
   }
 };
 
-exports.getImagesByRuta = async (req, res) => {
+// Obtener una imagen de la galería por ID
+exports.getGaleriaById = async (req, res) => {
   try {
-    const { ruta_id } = req.params;
-    const imagenes = await Galeria.findAll({ where: { ruta_id } });
-    res.status(200).json(imagenes);
+    const galeria = await Galeria.findByPk(req.params.id);
+    if (galeria) {
+      res.status(200).json(galeria);
+    } else {
+      res.status(404).json({ message: "Galería no encontrada" });
+    }
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener las imágenes", error });
+    res.status(500).json({ message: error.message });
   }
 };
 
-exports.getAllImages = async (req, res) => {
+// Crear una nueva imagen en la galería
+exports.createGaleria = async (req, res) => {
   try {
-    const imagenes = await Galeria.findAll();
-    res.status(200).json(imagenes);
+    const { ruta_id, url_imagen, fechaSubida } = req.body;
+    const newGaleria = await Galeria.create({
+      ruta_id,
+      url_imagen,
+      fechaSubida,
+    });
+    res.status(201).json(newGaleria);
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener las imágenes", error });
+    res.status(500).json({ message: error.message });
   }
 };
 
-exports.deleteImage = async (req, res) => {
+// Actualizar una imagen de la galería por ID
+exports.updateGaleria = async (req, res) => {
   try {
     const { id } = req.params;
-    await Galeria.destroy({ where: { id } });
-    res.status(200).json({ message: "Imagen eliminada con éxito" });
+    const [updated] = await Galeria.update(req.body, { where: { id } });
+    if (updated) {
+      const updatedGaleria = await Galeria.findByPk(id);
+      res.status(200).json(updatedGaleria);
+    } else {
+      res.status(404).json({ message: "Galería no encontrada" });
+    }
   } catch (error) {
-    res.status(500).json({ message: "Error al eliminar la imagen", error });
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Eliminar una imagen de la galería por ID
+exports.deleteGaleria = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Galeria.destroy({ where: { id } });
+    if (deleted) {
+      res.status(204).end();
+    } else {
+      res.status(404).json({ message: "Galería no encontrada" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
