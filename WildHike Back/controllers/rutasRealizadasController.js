@@ -1,6 +1,6 @@
 const RutasRealizadas = require("../models/RutasRealizadas");
 const User = require("../models/User");
-const Ruta = require("../models/Rutas");
+const Ruta = require("../models/Ruta");
 
 exports.createRutaRealizada = async (req, res) => {
   try {

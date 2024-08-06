@@ -1,4 +1,4 @@
-const Ruta = require("../models/Rutas");
+const Ruta = require("../models/Ruta");
 
 // Crear una nueva ruta
 exports.createRuta = async (req, res) => {
