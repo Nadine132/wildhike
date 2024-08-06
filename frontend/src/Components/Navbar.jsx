@@ -1,7 +1,5 @@
-import { Link, Outlet} from "react-router-dom";
-
-
 import * as React from 'react';
+import { Link, Outlet } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,14 +19,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Imagen from './Imagen';
+import Buscador from './Buscador'; // Importa el componente Buscador
 
-
-const routes = ["Login", "Home", "Contacto", "Rutas"]
-
-const routePath = [
-  "/", "/home", "/contacto", "/rutas" 
-]
-
+const routes = ["Login", "Home", "Contacto", "Rutas"];
+const routePath = ["/", "/home", "/contacto", "/rutas"];
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -53,7 +48,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  backgroundColor: "green",
+  backgroundColor: "white",
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -72,10 +67,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
-
 }));
 
 export default function PersistentDrawerLeft() {
@@ -91,20 +84,19 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', position: 'relative', minHeight: '100vh' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{ minHeight: '30px', paddingLeft: '8px', paddingRight: '8px' }}>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: 'black' }} />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Persistent drawer
           </Typography>
         </Toolbar>
@@ -129,12 +121,9 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Login', 'Home', 'Contacto', 'Rutas'].map((text, index) => (
+          {routes.map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton
-              component= {Link}
-              to={routePath[index]}
-              >
+              <ListItemButton component={Link} to={routePath[index]}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
@@ -144,45 +133,26 @@ export default function PersistentDrawerLeft() {
           ))}
         </List>
         <Divider />
-
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Outlet/>
-      
+        <Box sx={{ position: 'relative', height: '100%' }}>
+          <Imagen />    {/* Renderiza la imagen */}
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '40%', // Ajusta el ancho del buscador según sea necesario
+              paddingBottom: 27,
+            }}
+          >
+            <Buscador />  {/* Renderiza el buscador */}
+          </Box>
+        </Box>
+        <Outlet />
       </Main>
     </Box>
   );
 }
-
-
-/* 
-function Navbar() {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Login</Link>
-        </li>
-        
-        <li>
-          <Link to="/home">Home</Link>
-        </li>
-
-        <li>
-          <Link to="/contacto">Contacto</Link>
-        </li>
-
-
-        <li>
-          <Link to="/rutas">Rutas</Link>
-        </li>
-      </ul>
-    </nav>
-  );
-}
-
-export default Navbar;
-
-
- */
