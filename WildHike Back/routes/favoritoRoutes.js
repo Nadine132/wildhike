@@ -1,12 +1,31 @@
 const express = require("express");
-const router = express.Router();
-const FavoritoController = require("../controllers/FavoritoController");
+const passport = require("passport");
+const {
+  getAllFavoritos,
+  getFavoritoById,
+  createFavorito,
+  updateFavorito,
+  deleteFavorito,
+} = require("../controllers/FavoritoController");
 
-// Rutas para los favoritos
-router.get("/", FavoritoController.getAllFavoritos);
-router.get("/:id", FavoritoController.getFavoritoById);
-router.post("/", FavoritoController.createFavorito);
-router.put("/:id", FavoritoController.updateFavorito);
-router.delete("/:id", FavoritoController.deleteFavorito);
+const router = express.Router();
+
+router.get("/", getAllFavoritos);
+router.get("/:id", getFavoritoById);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  createFavorito
+);
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  updateFavorito
+);
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  deleteFavorito
+);
 
 module.exports = router;

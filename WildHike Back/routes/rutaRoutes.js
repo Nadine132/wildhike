@@ -1,12 +1,27 @@
 const express = require("express");
-const router = express.Router();
-const RutaController = require("../controllers/RutaController");
+const passport = require("passport");
+const {
+  getAllRutas,
+  getRutaById,
+  createRuta,
+  updateRuta,
+  deleteRuta,
+} = require("../controllers/RutaController");
 
-// Rutas para las rutas
-router.get("/", RutaController.getAllRutas);
-router.get("/:id", RutaController.getRutaById);
-router.post("/", RutaController.createRuta);
-router.put("/:id", RutaController.updateRuta);
-router.delete("/:id", RutaController.deleteRuta);
+const router = express.Router();
+
+router.get("/", getAllRutas);
+router.get("/:id", getRutaById);
+router.post("/", passport.authenticate("jwt", { session: false }), createRuta);
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  updateRuta
+);
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  deleteRuta
+);
 
 module.exports = router;

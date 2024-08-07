@@ -1,12 +1,31 @@
 const express = require("express");
-const router = express.Router();
-const ComentarioController = require("../controllers/ComentarioController");
+const passport = require("passport");
+const {
+  getAllComentarios,
+  getComentarioById,
+  createComentario,
+  updateComentario,
+  deleteComentario,
+} = require("../controllers/ComentarioController");
 
-// Rutas para los comentarios
-router.get("/", ComentarioController.getAllComentarios);
-router.get("/:id", ComentarioController.getComentarioById);
-router.post("/", ComentarioController.createComentario);
-router.put("/:id", ComentarioController.updateComentario);
-router.delete("/:id", ComentarioController.deleteComentario);
+const router = express.Router();
+
+router.get("/", getAllComentarios); // Se debe usar getAllComentarios aquí
+router.get("/:id", getComentarioById); // Ruta para obtener comentario por ID
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  createComentario
+);
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  updateComentario
+);
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  deleteComentario
+);
 
 module.exports = router;

@@ -1,12 +1,31 @@
 const express = require("express");
-const router = express.Router();
-const GaleriaController = require("../controllers/GaleriaController");
+const passport = require("passport");
+const {
+  getAllGalerias,
+  getGaleriaById,
+  createGaleria,
+  updateGaleria,
+  deleteGaleria,
+} = require("../controllers/GaleriaController");
 
-// Rutas para la galería
-router.get("/", GaleriaController.getAllGalerias);
-router.get("/:id", GaleriaController.getGaleriaById);
-router.post("/", GaleriaController.createGaleria);
-router.put("/:id", GaleriaController.updateGaleria);
-router.delete("/:id", GaleriaController.deleteGaleria);
+const router = express.Router();
+
+router.get("/", getAllGalerias);
+router.get("/:id", getGaleriaById);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  createGaleria
+);
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  updateGaleria
+);
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  deleteGaleria
+);
 
 module.exports = router;
