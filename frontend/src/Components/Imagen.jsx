@@ -9,9 +9,9 @@ export default function Imagen() {
         width: '100%',      // Ocupa todo el ancho
         height: '60vh',     // Ajusta la altura a 60% de la ventana
         overflow: 'hidden', 
-        position: 'absolute', // Asegura que el Box esté en una posición absoluta
+        position: 'relative', // Relativo para evitar desbordamientos
         top: 0,              // Colocado en la parte superior
-        left: '200px',             // Colocado en el borde izquierdo
+        left: 0,             // Alinea con el borde izquierdo de la pantalla
         zIndex: -1,          // Envía el componente al fondo, detrás de otros elementos
         p: 0 
       }}
@@ -19,10 +19,7 @@ export default function Imagen() {
       <AspectRatio 
         sx={{ 
           width: '100%', 
-          height: '100%', 
-          position: 'absolute', 
-          top: 0, 
-          left: 0 
+          height: '100%',
         }}
       >
         <img
@@ -30,8 +27,9 @@ export default function Imagen() {
           alt="Scenic View"
           style={{ 
             width: '100%', 
-            height: '100%', 
-            objectFit: 'cover' 
+            height: '60%', 
+            objectFit: 'cover',
+            objectPosition: 'center' // Centra la imagen en su contenedor
           }}
         />
       </AspectRatio>
@@ -39,7 +37,7 @@ export default function Imagen() {
         sx={{
           position: 'absolute',
           bottom: '20px',         // Coloca el texto en la parte inferior
-          left: '30px',          // Ajusta la distancia desde el borde izquierdo
+          left: '250px',          // Ajusta la distancia desde el borde izquierdo
           color: 'white',        // Color del texto
           padding: '10px',
           borderRadius: '5px',
