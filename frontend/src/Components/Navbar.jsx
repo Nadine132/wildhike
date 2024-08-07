@@ -17,10 +17,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import LoginIcon from '@mui/icons-material/Login';
+import HomeIcon from '@mui/icons-material/Home';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import Imagen from './Imagen';
 import Buscador from './Buscador'; // Importa el componente Buscador
+import Footer from './Footer';  // Importa el Footer
+/* import Home from '../Pages/Home';
+ */
 
 const routes = ["Login", "Home", "Contacto", "Rutas"];
 const routePath = ["/", "/home", "/contacto", "/rutas"];
@@ -84,7 +89,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex', position: 'relative', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx={{ minHeight: '30px', paddingLeft: '8px', paddingRight: '8px' }}>
@@ -125,7 +130,10 @@ export default function PersistentDrawerLeft() {
             <ListItem key={text} disablePadding>
               <ListItemButton component={Link} to={routePath[index]}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 && <LoginIcon />}           {/* Login */}
+                  {index === 1 && <HomeIcon />}            {/* Home */}
+                  {index === 2 && <ConnectWithoutContactIcon />}  {/* Contacto */}
+                  {index === 3 && <DirectionsWalkIcon />}  {/* Rutas */}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -134,25 +142,14 @@ export default function PersistentDrawerLeft() {
         </List>
         <Divider />
       </Drawer>
-      <Main open={open}>
+      <Main open={open} sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <DrawerHeader />
-        <Box sx={{ position: 'relative', height: '100%' }}>
-          <Imagen />    {/* Renderiza la imagen */}
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '40%', // Ajusta el ancho del buscador según sea necesario
-              paddingBottom: 27,
-            }}
-          >
-            <Buscador />  {/* Renderiza el buscador */}
-          </Box>
-        </Box>
+{/*         <Home/>
+ */}  
         <Outlet />
       </Main>
+      <Footer /> {/* Renderiza el footer */}
+
     </Box>
   );
 }

@@ -11,7 +11,7 @@ export default function Imagen() {
         overflow: 'hidden', 
         position: 'absolute', // Asegura que el Box esté en una posición absoluta
         top: 0,              // Colocado en la parte superior
-        left: 0,             // Colocado en el borde izquierdo
+        left: '200px',             // Colocado en el borde izquierdo
         zIndex: -1,          // Envía el componente al fondo, detrás de otros elementos
         p: 0 
       }}
@@ -39,7 +39,7 @@ export default function Imagen() {
         sx={{
           position: 'absolute',
           bottom: '20px',         // Coloca el texto en la parte inferior
-          left: '20px',          // Ajusta la distancia desde el borde izquierdo
+          left: '30px',          // Ajusta la distancia desde el borde izquierdo
           color: 'white',        // Color del texto
           padding: '10px',
           borderRadius: '5px',
