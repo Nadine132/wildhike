@@ -1,9 +1,13 @@
 const express = require("express");
 const passport = require("passport");
-require("./config/passport"); // Importa la configuración de Passport
+const dotenv = require("dotenv");
+require("./config/passport")(passport); // Importa la configuración de Passport
+const { swaggerSpec, swaggerUi } = require("./config/swagger");
 
 const app = express();
 const bodyParser = require("body-parser");
+
+dotenv.config();
 
 // Importar rutas
 const comentarioRoutes = require("./routes/comentarioRoutes");
@@ -27,11 +31,14 @@ app.use("/api/rutas-realizadas", rutasRealizadasRoutes);
 app.use("/api/usuarios", userRoutes);
 app.use("/api/auth", authRoutes); // Configura la ruta de autenticación
 
-// Manejo de errores
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Middleware de manejo de errores para rutas no encontradas
 app.use((req, res, next) => {
   res.status(404).json({ message: "Recurso no encontrado" });
 });
 
+// Middleware de manejo de errores generales
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Error en el servidor" });

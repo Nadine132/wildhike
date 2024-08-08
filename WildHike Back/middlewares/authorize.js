@@ -1,16 +1,12 @@
-const authorize = (roles = []) => {
-  // Si roles no es un array, convertirlo a array
-  if (typeof roles === "string") {
-    roles = [roles];
-  }
-
+// middlewares/authorize.js
+module.exports = (role) => {
   return (req, res, next) => {
-    const user = req.user; // Usuario autenticado
-    if (!user || !roles.includes(user.rol)) {
-      return res.status(403).json({ message: "Acceso denegado" });
+    if (req.user && req.user.rol === role) {
+      return next();
+    } else {
+      return res
+        .status(403)
+        .json({ message: "No tienes permisos para acceder a esta ruta" });
     }
-    next();
   };
 };
-
-module.exports = authorize;

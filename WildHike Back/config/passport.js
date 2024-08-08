@@ -1,6 +1,7 @@
+// config/passport.js
 const { Strategy, ExtractJwt } = require("passport-jwt");
-const { User } = require("../models"); // Usa el nombre correcto del modelo
-const { SECRET_KEY } = require("./auth"); // Asegúrate de que SECRET_KEY esté correctamente importado
+const { User } = require("../models");
+const SECRET_KEY = "1234"; // Asegúrate de que esto coincide con tu clave secreta
 
 module.exports = (passport) => {
   const opts = {};
@@ -10,7 +11,7 @@ module.exports = (passport) => {
   passport.use(
     new Strategy(opts, async (jwt_payload, done) => {
       try {
-        const user = await User.findByPk(jwt_payload.id); // Usa el nombre correcto del modelo
+        const user = await User.findByPk(jwt_payload.id);
         if (user) {
           return done(null, user);
         } else {
