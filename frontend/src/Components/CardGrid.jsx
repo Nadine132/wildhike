@@ -16,7 +16,7 @@ const cardData = [
 
 export default function CardGrid() {
   return (
-    <Grid container spacing={3} sx={{ justifyContent: 'center', paddingLeft: '165px', maxWidth: '100%' }}>
+    <Grid container spacing={3} sx={{ justifyContent: 'center', maxWidth: '100%' }}>
       {cardData.map((card, index) => (
         <Grid item key={index}>
           <Card sx={{ height: '300px', width: 280 }}>
