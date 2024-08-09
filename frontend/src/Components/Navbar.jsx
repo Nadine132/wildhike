@@ -1,7 +1,5 @@
-import { Link, Outlet} from "react-router-dom";
-
-
 import * as React from 'react';
+import { Link, Outlet } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -19,16 +17,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import LoginIcon from '@mui/icons-material/Login';
+import HomeIcon from '@mui/icons-material/Home';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import Imagen from './Imagen';
+import Buscador from './Buscador'; // Importa el componente Buscador
+import Footer from './Footer';  // Importa el Footer
+/* import Home from '../Pages/Home';
+ */
 
-
-const routes = ["Login", "Home", "Contacto", "Rutas"]
-
-const routePath = [
-  "/", "/home", "/contacto", "/rutas" 
-]
-
+const routes = ["Login", "Home", "Contacto", "Rutas"];
+const routePath = ["/", "/home", "/contacto", "/rutas"];
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -53,7 +53,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  backgroundColor: "green",
+  backgroundColor: "white",
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -72,10 +72,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
-
 }));
 
 export default function PersistentDrawerLeft() {
@@ -91,20 +89,19 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{ minHeight: '30px', paddingLeft: '8px', paddingRight: '8px' }}>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: 'black' }} />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Persistent drawer
           </Typography>
         </Toolbar>
@@ -129,14 +126,14 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Login', 'Home', 'Contacto', 'Rutas'].map((text, index) => (
+          {routes.map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton
-              component= {Link}
-              to={routePath[index]}
-              >
+              <ListItemButton component={Link} to={routePath[index]}>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 && <LoginIcon />}           {/* Login */}
+                  {index === 1 && <HomeIcon />}            {/* Home */}
+                  {index === 2 && <ConnectWithoutContactIcon />}  {/* Contacto */}
+                  {index === 3 && <DirectionsWalkIcon />}  {/* Rutas */}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -144,45 +141,15 @@ export default function PersistentDrawerLeft() {
           ))}
         </List>
         <Divider />
-
       </Drawer>
-      <Main open={open}>
+      <Main open={open} sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <DrawerHeader />
-        <Outlet/>
-      
+{/*         <Home/>
+ */}  
+        <Outlet />
       </Main>
+      <Footer /> {/* Renderiza el footer */}
+
     </Box>
   );
 }
-
-
-/* 
-function Navbar() {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Login</Link>
-        </li>
-        
-        <li>
-          <Link to="/home">Home</Link>
-        </li>
-
-        <li>
-          <Link to="/contacto">Contacto</Link>
-        </li>
-
-
-        <li>
-          <Link to="/rutas">Rutas</Link>
-        </li>
-      </ul>
-    </nav>
-  );
-}
-
-export default Navbar;
-
-
- */
