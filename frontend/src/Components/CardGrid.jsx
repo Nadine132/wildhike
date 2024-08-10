@@ -6,7 +6,6 @@ import Typography from '@mui/joy/Typography';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { Grid } from '@mui/material';
 
-// Lista de imágenes y títulos
 const cardData = [
   { src: 'https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg', title: 'Title 1', location: 'Location 1' },
   { src: 'https://images.pexels.com/photos/1047051/pexels-photo-1047051.jpeg', title: 'Title 2', location: 'Location 2' },
