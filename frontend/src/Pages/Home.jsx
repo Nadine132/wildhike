@@ -2,7 +2,8 @@ import React from 'react';
 import Imagen from '../Components/Imagen';
 import { Box, Typography } from '@mui/material';
 import CardGrid from '../Components/CardGrid';
-import Zonas from '../Components/Zonas';  // Importar el componente Zonas
+import Zonas from '../Components/Zonas';
+import ProvinciaSelect from '../Components/Select';  // Importa el nuevo componente
 
 function Home() {
   return (
@@ -10,6 +11,11 @@ function Home() {
       {/* Contenedor de la imagen */}
       <Box sx={{ position: 'relative', flexGrow: 1, width: '100%', overflowX: 'hidden' }}>
         <Imagen />    {/* Renderiza la imagen */}
+      </Box>
+      
+      {/* Contenedor del select */}
+      <Box sx={{ marginTop: 2, padding: 2 }}>
+        <ProvinciaSelect /> {/* Renderiza el componente select */}
       </Box>
       
       {/* Contenedor de las recomendaciones y las tarjetas */}

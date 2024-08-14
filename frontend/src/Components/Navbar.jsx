@@ -22,7 +22,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import Imagen from './Imagen';
-import Buscador from './Buscador'; // Importa el componente Buscador
+import Select from './Select'
 import Footer from './Footer';  // Importa el Footer
 /* import Home from '../Pages/Home';
  */
