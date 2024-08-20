@@ -57,8 +57,8 @@ const Contacto = () => {
             <p>Email: <a href="mailto:wildhike@gmail.com" style={{ color: 'white', textDecoration: 'none' }}>wildhike@gmail.com</a></p>
             {submitted ? (
                 <div className="thank-you-message">
-                    <h3>Thank you for contacting us!</h3>
-                    <p>We will get back to you soon.</p>
+                    <h3>Gracias por contactar con nosotros!</h3>
+                    <p>Nos comunicaremos con usted.</p>
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} style={{

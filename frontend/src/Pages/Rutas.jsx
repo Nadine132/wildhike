@@ -107,7 +107,7 @@ function Rutas() {
 
       <Box sx={{ padding: '20px' }}>
         <Typography variant="h4" component="h2" gutterBottom>
-          Rutas de Senderismo por Bosques
+          Rutas de Senderismo:
         </Typography>
         <Grid container spacing={2}>
           {currentRutas.map((ruta, index) => (

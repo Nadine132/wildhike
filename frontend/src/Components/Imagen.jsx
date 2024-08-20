@@ -28,7 +28,8 @@ export default function Imagen() {
             height: '100%', 
             objectFit: 'cover',
             objectPosition: 'center',
-            position: 'absolute' 
+            position: 'absolute', 
+           
           }}
         />
      
