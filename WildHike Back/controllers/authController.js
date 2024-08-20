@@ -1,13 +1,18 @@
-const { User } = require("../models"); // Asegúrate de que 'User' esté correctamente importado
+const { User } = require("../models");
 const { comparePassword, generateToken } = require("../config/auth");
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { credential, password } = req.body;
   try {
-    console.log("Received email:", email);
+    console.log("Received credential:", credential);
     console.log("Received password:", password);
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: {
+        [Op.or]: [{ email: credential }, { username: credential }],
+      },
+    });
+
     if (!user) {
       return res.status(401).json({ message: "Credenciales inválidas" });
     }

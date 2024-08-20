@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const dotenv = require("dotenv");
+const cors = require("cors"); // Importa el paquete cors
 require("./config/passport")(passport); // Importa la configuración de Passport
 const { swaggerSpec, swaggerUi } = require("./config/swagger");
 
@@ -8,6 +9,17 @@ const app = express();
 const bodyParser = require("body-parser");
 
 dotenv.config();
+
+// Configura CORS para permitir solicitudes desde cualquier origen
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Permite solicitudes desde el frontend
+  })
+);
+
+// Middleware
+app.use(bodyParser.json());
+app.use(passport.initialize()); // Inicializa Passport
 
 // Importar rutas
 const comentarioRoutes = require("./routes/comentarioRoutes");
@@ -17,10 +29,6 @@ const rutaRoutes = require("./routes/rutaRoutes");
 const rutasRealizadasRoutes = require("./routes/rutasRealizadasRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes"); // Importar rutas de autenticación
-
-// Middleware
-app.use(bodyParser.json());
-app.use(passport.initialize()); // Inicializa Passport
 
 // Usar rutas
 app.use("/api/comentarios", comentarioRoutes);

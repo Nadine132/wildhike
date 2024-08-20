@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../axiosConfig"; // Usa axiosInstance
 
 function Login() {
   const [credential, setCredential] = useState("");
@@ -8,18 +9,18 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ credential, password }),
-    });
+    try {
+      const response = await axios.post("/auth/login", {
+        credential,
+        password,
+      });
 
-    if (response.ok) {
-      navigate("/home");
-    } else {
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token); // Guarda el token
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
       alert("Credenciales incorrectas");
     }
   };
