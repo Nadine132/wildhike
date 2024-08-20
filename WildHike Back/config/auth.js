@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models"); // Usar el nombre correcto del modelo
+const { User } = require("../models");
 
 const SECRET_KEY = "1234";
 
