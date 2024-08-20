@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -23,8 +23,7 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getToken, removeToken } from '../utils/auth'; // Asegúrate de importar getToken y removeToken
-import Imagen from './Imagen';
-import Select from './Select';
+import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
 const routes = ["Home", "Contacto", "Rutas", "Perfil"];
@@ -80,6 +79,11 @@ export default function PersistentDrawerLeft() {
   const [open, setOpen] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(!!getToken());
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsLoggedIn(!!getToken());
+  }, [location]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,7 +113,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon sx={{ color: 'black' }} />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Persistent drawer
+            WildHike
           </Typography>
           {isLoggedIn ? (
             <IconButton onClick={handleLogout} edge="end" sx={{ color: 'black' }}>

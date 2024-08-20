@@ -30,7 +30,6 @@ function Profile() {
       <h2>Perfil de Usuario</h2>
       <p><strong>Nombre:</strong> {user.nombreDeUsuario}</p>
       <p><strong>Correo:</strong> {user.email}</p>
-      
     </div>
   );
 }

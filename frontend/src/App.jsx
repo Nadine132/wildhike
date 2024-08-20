@@ -13,22 +13,19 @@ import PrivateRoute from './Components/PrivateRoute';
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/rutas" element={<Rutas />} />
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/rutas" element={<Rutas />} />
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
