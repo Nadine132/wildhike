@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../axiosConfig"; // Usa axiosInstance
+import axios from "../axiosConfig";
 
 function Login() {
   const [credential, setCredential] = useState("");
@@ -16,7 +16,7 @@ function Login() {
       });
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token); // Guarda el token
+        localStorage.setItem("token", response.data.token);
         navigate("/home");
       }
     } catch (error) {

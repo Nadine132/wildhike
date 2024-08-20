@@ -1,15 +1,22 @@
 const { User } = require("../models");
 const { comparePassword, generateToken } = require("../config/auth");
+const { Op } = require("sequelize");
 
 exports.login = async (req, res) => {
   const { credential, password } = req.body;
+
   try {
+    // Validación de entrada
+    if (!credential || !password) {
+      return res.status(400).json({ message: "Faltan credenciales" });
+    }
+
     console.log("Received credential:", credential);
     console.log("Received password:", password);
 
     const user = await User.findOne({
       where: {
-        [Op.or]: [{ email: credential }, { username: credential }],
+        [Op.or]: [{ email: credential }, { nombreDeUsuario: credential }],
       },
     });
 

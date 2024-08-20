@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,14 +21,14 @@ import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { getToken, removeToken } from '../utils/auth'; // Asegúrate de importar getToken y removeToken
 import Imagen from './Imagen';
-import Select from './Select'
-import Footer from './Footer';  // Importa el Footer
-/* import Home from '../Pages/Home';
- */
+import Select from './Select';
+import Footer from './Footer';
 
-const routes = ["Login", "Home", "Contacto", "Rutas"];
-const routePath = ["/", "/home", "/contacto", "/rutas"];
+const routes = ["Home", "Contacto", "Rutas", "Perfil"];
+const routePath = ["/home", "/contacto", "/rutas", "/profile"];
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -39,7 +39,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    /* marginLeft: `-${drawerWidth}px`, */
     ...(open && {
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
@@ -79,6 +78,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(!!getToken());
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -86,6 +87,12 @@ export default function PersistentDrawerLeft() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = () => {
+    removeToken();
+    setIsLoggedIn(false);
+    navigate('/');
   };
 
   return (
@@ -104,6 +111,15 @@ export default function PersistentDrawerLeft() {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Persistent drawer
           </Typography>
+          {isLoggedIn ? (
+            <IconButton onClick={handleLogout} edge="end" sx={{ color: 'black' }}>
+              <AccountCircleIcon /> {/* Icono para cerrar sesión */}
+            </IconButton>
+          ) : (
+            <IconButton component={Link} to="/" edge="end" sx={{ color: 'black' }}>
+              <LoginIcon /> {/* Icono para iniciar sesión */}
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -127,29 +143,28 @@ export default function PersistentDrawerLeft() {
         <Divider />
         <List>
           {routes.map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton component={Link} to={routePath[index]}>
-                <ListItemIcon>
-                  {index === 0 && <LoginIcon />}           {/* Login */}
-                  {index === 1 && <HomeIcon />}            {/* Home */}
-                  {index === 2 && <ConnectWithoutContactIcon />}  {/* Contacto */}
-                  {index === 3 && <DirectionsWalkIcon />}  {/* Rutas */}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
+            (index < 3 || isLoggedIn) && ( // Solo mostrar la ruta de perfil si el usuario está autenticado
+              <ListItem key={text} disablePadding>
+                <ListItemButton component={Link} to={routePath[index]}>
+                  <ListItemIcon>
+                    {index === 0 && <HomeIcon />}            {/* Home */}
+                    {index === 1 && <ConnectWithoutContactIcon />}  {/* Contacto */}
+                    {index === 2 && <DirectionsWalkIcon />}  {/* Rutas */}
+                    {index === 3 && <AccountCircleIcon />}  {/* Perfil */}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            )
           ))}
         </List>
         <Divider />
       </Drawer>
       <Main open={open} sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         <DrawerHeader />
-{/*         <Home/>
- */}  
         <Outlet />
       </Main>
       <Footer /> {/* Renderiza el footer */}
-
     </Box>
   );
 }
