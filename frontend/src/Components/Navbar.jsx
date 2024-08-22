@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -23,7 +23,6 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getToken, removeToken } from '../utils/auth'; // Asegúrate de importar getToken y removeToken
-import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
 const routes = ["Home", "Contacto", "Rutas", "Perfil"];
@@ -43,7 +42,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
+      marginLeft: `${drawerWidth}px`,
     }),
   }),
 );
@@ -76,8 +75,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(!!getToken());
+  const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!getToken());
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -85,13 +84,9 @@ export default function PersistentDrawerLeft() {
     setIsLoggedIn(!!getToken());
   }, [location]);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  const handleDrawerOpen = () => setOpen(true);
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const handleDrawerClose = () => setOpen(false);
 
   const handleLogout = () => {
     removeToken();
@@ -100,7 +95,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar sx={{ minHeight: '30px', paddingLeft: '8px', paddingRight: '8px' }}>
@@ -117,11 +112,11 @@ export default function PersistentDrawerLeft() {
           </Typography>
           {isLoggedIn ? (
             <IconButton onClick={handleLogout} edge="end" sx={{ color: 'black' }}>
-              <AccountCircleIcon /> {/* Icono para cerrar sesión */}
+              <LoginIcon /> {/* Icono para cerrar sesión */}
             </IconButton>
           ) : (
-            <IconButton component={Link} to="/" edge="end" sx={{ color: 'black' }}>
-              <LoginIcon /> {/* Icono para iniciar sesión */}
+            <IconButton component={Link} to="/login" edge="end" sx={{ color: 'black' }}>
+              <AccountCircleIcon /> {/* Icono para iniciar sesión */}
             </IconButton>
           )}
         </Toolbar>
@@ -164,7 +159,7 @@ export default function PersistentDrawerLeft() {
         </List>
         <Divider />
       </Drawer>
-      <Main open={open} sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+      <Main open={open}>
         <DrawerHeader />
         <Outlet />
       </Main>

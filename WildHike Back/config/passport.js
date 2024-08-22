@@ -1,7 +1,7 @@
 // config/passport.js
 const { Strategy, ExtractJwt } = require("passport-jwt");
 const { User } = require("../models");
-const SECRET_KEY = "1234"; // Asegúrate de que esto coincide con tu clave secreta
+const SECRET_KEY = "Ibiza202113"; // Asegúrate de que esto coincide con tu clave secreta
 
 module.exports = (passport) => {
   const opts = {};

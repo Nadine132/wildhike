@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models"); // Usar el nombre correcto del modelo
 
-const SECRET_KEY = "1234";
+const SECRET_KEY = "Ibiza202113";
 
 const hashPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);

@@ -1,13 +1,11 @@
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Login from "./Pages/Login";
 import Register from "./Pages/Registro";
 import Home from "./Pages/Home";
 import Rutas from "./Pages/Rutas";
+import RouteDetails from "./Pages/RouteDetails";  // Añadimos RouteDetails
 import Contacto from "./Pages/Contacto";
 import Profile from "./Pages/Profile";
-
 import Layout from "./Components/Layout";
 import PrivateRoute from './Components/PrivateRoute';
 
@@ -20,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/rutas" element={<Rutas />} />
+          <Route path="/rutas/:id" element={<RouteDetails />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
         </Route>
