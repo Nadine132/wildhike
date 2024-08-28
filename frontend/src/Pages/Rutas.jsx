@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Card, CardContent, Typography, Button, CircularProgress, Box, Pagination } from '@mui/material';
+import Imagen from '../Components/Imagen';
 
 const Rutas = () => {
   const [rutas, setRutas] = useState([]);
@@ -86,13 +87,12 @@ const Rutas = () => {
   return (
     <Box sx={{ padding: 2 }}>
       <Box
-        component="img"
-        src="https://images.pexels.com/photos/206796/pexels-photo-206796.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        alt="Cabecera"
-        sx={{ width: '100%', height: '300px', objectFit: 'cover', marginBottom: 2 }}
-      />
+       sx={{ position: 'relative', flexGrow: 1, width: '100%', overflowX: 'hidden' }}>
+      <Imagen />    {/* Renderiza la imagen */}
+    </Box>
+      
 
-      <Typography variant="h4" gutterBottom align="center">
+      <Typography variant="h4" gutterBottom align="center" marginBottom="50px" marginTop= "30px">
         Rutas
       </Typography>
 
