@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Button } from '@mui/material';
+import ImageDetails from './ImageDetails';
 
 const RouteDetails = () => {
-  const { id } = useParams();  // Obtén el ID de la ruta desde la URL
-  const [ruta, setRuta] = useState(null);  // Estado para almacenar la ruta
-  const [loading, setLoading] = useState(true);  // Estado de carga
-  const [error, setError] = useState(null);  // Estado de error
+  const { id } = useParams();  
+  const [ruta, setRuta] = useState(null);  
+  const [loading, setLoading] = useState(true);  
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     const fetchRuta = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/rutas/${id}`);  // Llama al endpoint de la API para obtener la ruta
+        const response = await fetch(`http://localhost:3000/api/rutas/${id}`);  
         if (!response.ok) {
           throw new Error('Error fetching data');
         }
@@ -27,6 +28,8 @@ const RouteDetails = () => {
     fetchRuta();  // Ejecuta la función para obtener la ruta
   }, [id]);  // Dependencia en el ID de la ruta para que se ejecute cada vez que cambie
 
+ console.log(ruta)
+
   if (loading) {
     return (
       <Box
@@ -39,7 +42,7 @@ const RouteDetails = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',  // Hace que la imagen de fondo se mantenga fija al hacer scroll
+          backgroundAttachment: 'fixed',  
         }}
       >
         <CircularProgress />  {/* Indicador de carga */}
@@ -93,50 +96,46 @@ const RouteDetails = () => {
 
   return (
     <Box
-      sx={{
-        padding: 2,
-        backgroundImage: 'url("https://images.pexels.com/photos/26860473/pexels-photo-26860473/free-photo-of-madera-ligero-carretera-paisaje.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        color: 'white'  // Cambia el color del texto para asegurar contraste sobre la imagen
-      }}
+   
+
+
     >
+<ImageDetails ruta_id={ruta.id}/>
+
       <Typography variant="h4" gutterBottom align="center">
-        {ruta.nombre}  {/* Nombre de la ruta */}
+        {ruta.nombre}  
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Provincia:</strong> {ruta.provincia}  {/* Provincia */}
+        <strong>Provincia:</strong> {ruta.provincia} 
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Descripción:</strong> {ruta.descripcion}  {/* Descripción */}
+        <strong>Descripción:</strong> {ruta.descripcion} 
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Zona Natural:</strong> {ruta.zona_natural}  {/* Zona natural */}
+        <strong>Zona Natural:</strong> {ruta.zona_natural}  
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Estimación:</strong> {ruta.estimacion}  {/* Estimación */}
+        <strong>Estimación:</strong> {ruta.estimacion} 
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Duración:</strong> {ruta.duracion} horas  {/* Duración */}
+        <strong>Duración:</strong> {ruta.duracion} horas 
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Dificultad:</strong> {ruta.dificultad}  {/* Dificultad */}
+        <strong>Dificultad:</strong> {ruta.dificultad} 
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Distancia:</strong> {ruta.distancia} km  {/* Distancia */}
+        <strong>Distancia:</strong> {ruta.distancia} km 
       </Typography>
 
       <Typography variant="body1" paragraph align="center">
-        <strong>Desnivel:</strong> {ruta.desnivel} metros  {/* Desnivel */}
+        <strong>Desnivel:</strong> {ruta.desnivel} metros 
       </Typography>
 
       <Box display="flex" justifyContent="center" mt={2}>

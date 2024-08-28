@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Typography, CircularProgress } from '@mui/material';
 
-export default function ImageGallery() {
+export default function ImageDetails({ruta_id}) {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +18,7 @@ export default function ImageGallery() {
     }
   };
 
+   console.log(images)
   useEffect(() => {
     fetchImages();
   }, []);
@@ -33,17 +34,19 @@ export default function ImageGallery() {
   return (
     <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
       {images.map((image) => (
-        <Grid item key={image.id}>
-          <div>
-            <img
-              src={image.url} // Asegúrate de que las URLs sean correctas y accesibles
-              alt={`Imagen ${image.id}`}
-              style={{ width: '300px', height: 'auto' }}
-            />
-            <Typography variant="subtitle1">{`Imagen ${image.id}`}</Typography>
-          </div>
-        </Grid>
+        image.ruta_id === ruta_id && ( 
+          <Grid item key={image.id}>
+            <div>
+              <img
+                src={image.url_imagen} // Asegúrate de que las URLs sean correctas y accesibles
+                alt={`Imagen ${image.id}`}
+                style={{ width: '300px', height: 'auto' }}
+              />
+            </div>
+          </Grid>
+        )
       ))}
     </Grid>
   );
+  
 }
