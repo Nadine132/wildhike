@@ -28,23 +28,9 @@ const RouteDetails = () => {
     fetchRuta();  // Ejecuta la función para obtener la ruta
   }, [id]);  // Dependencia en el ID de la ruta para que se ejecute cada vez que cambie
 
- console.log(ruta)
-
   if (loading) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        sx={{
-          backgroundImage: 'url("https://images.pexels.com/photos/26860473/pexels-photo-26860473/free-photo-of-madera-ligero-carretera-paisaje.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',  
-        }}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <CircularProgress />  {/* Indicador de carga */}
       </Box>
     );
@@ -52,19 +38,7 @@ const RouteDetails = () => {
 
   if (error) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        sx={{
-          backgroundImage: 'url("https://images.pexels.com/photos/26860473/pexels-photo-26860473/free-photo-of-madera-ligero-carretera-paisaje.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
-        }}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <Typography variant="h6" color="error" align="center">
           {error}  {/* Mensaje de error */}
         </Typography>
@@ -74,19 +48,7 @@ const RouteDetails = () => {
 
   if (!ruta) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-        sx={{
-          backgroundImage: 'url("https://images.pexels.com/photos/26860473/pexels-photo-26860473/free-photo-of-madera-ligero-carretera-paisaje.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
-        }}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <Typography variant="h6" color="text.secondary" align="center">
           Ruta no encontrada.  {/* Mensaje si no se encuentra la ruta */}
         </Typography>
@@ -95,12 +57,8 @@ const RouteDetails = () => {
   }
 
   return (
-    <Box
-   
-
-
-    >
-<ImageDetails ruta_id={ruta.id}/>
+    <Box>
+      <ImageDetails ruta_id={ruta.id} />
 
       <Typography variant="h4" gutterBottom align="center">
         {ruta.nombre}  

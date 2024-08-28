@@ -45,7 +45,7 @@ const Contacto = () => {
 
     return (
         <div style={{
-            backgroundImage: `url('https://images.pexels.com/photos/1080474/pexels-photo-1080474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
+            backgroundImage: `url('https://images.pexels.com/photos/26860473/pexels-photo-26860473/free-photo-of-madera-ligero-carretera-paisaje.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             padding: '50px',
