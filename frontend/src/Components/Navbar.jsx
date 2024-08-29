@@ -107,7 +107,7 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon sx={{ color: 'black' }} />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" color='black' noWrap component="div" sx={{ flexGrow: 1 }}>
             WildHike
           </Typography>
           {isLoggedIn ? (

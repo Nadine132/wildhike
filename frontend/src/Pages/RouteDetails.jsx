@@ -33,7 +33,7 @@ const RouteDetails = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
         <CircularProgress />
       </Box>
     );
@@ -41,7 +41,7 @@ const RouteDetails = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
         <Typography variant="h6" color="error" align="center">
           {error}
         </Typography>
@@ -51,7 +51,7 @@ const RouteDetails = () => {
 
   if (!ruta) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
         <Typography variant="h6" color="text.secondary" align="center">
           Ruta no encontrada.
         </Typography>
@@ -60,14 +60,16 @@ const RouteDetails = () => {
   }
 
   return (
-    <Box p={3}>
+    <Box p={3} sx={{ backgroundColor: '#f5f5f5' }}>
       {/* Nombre de la ruta arriba de las imágenes */}
       <Typography variant="h4" gutterBottom align="center">
         {ruta.nombre}
       </Typography>
 
       {/* Componente para mostrar las imágenes */}
-      <ImageDetails ruta_id={ruta.id} />
+      <Box sx={{ marginY: 6 }}>
+        <ImageDetails ruta_id={ruta.id} />
+      </Box>
 
       <Typography variant="body1" paragraph align="center">
         <strong>Provincia:</strong> {ruta.provincia}
