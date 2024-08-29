@@ -19,7 +19,7 @@ function Home() {
       </Box>
       
       {/* Contenedor de las recomendaciones y las tarjetas */}
-      <Box sx={{ marginTop: 10, padding: 2 }}>
+      <Box sx={{ marginTop: 2, padding: 2 }}>
         {/* Texto "Recomendaciones" */}
         <Typography variant="h4" component="h2" align="center" sx={{ marginBottom: 2 }}>
           Recomendaciones
