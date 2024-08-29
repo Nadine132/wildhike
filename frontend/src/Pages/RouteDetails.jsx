@@ -104,7 +104,15 @@ const RouteDetails = () => {
       </Typography>
 
       <Box display="flex" justifyContent="center" mt={2}>
-        <Button variant="contained" href={ruta.localizacion_url} target="_blank">
+        <Button
+          variant="contained"
+          href={
+            ruta.coordenadas
+              ? `https://www.google.com/maps?q=${encodeURIComponent(ruta.coordenadas)}`
+              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ruta.direccion)}`
+          }
+          target="_blank"
+        >
           Ver Localización
         </Button>
       </Box>
