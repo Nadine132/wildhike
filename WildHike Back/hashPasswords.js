@@ -5,6 +5,7 @@ const users = [
   { email: "bautistanadin@gmail.com", password: "bautista" },
   { email: "adrianruesca@gmail.com", password: "ruesca" },
   { email: "Antonia@gmail.com", password: "123456" },
+  { email: "usuario@ejemplo.com", password: "asdf" },
 ];
 
 const hashPasswords = async () => {

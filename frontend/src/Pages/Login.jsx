@@ -14,7 +14,7 @@ function Login() {
         credential,
         password,
       });
-
+      console.log("Respuesta de la API:", response);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         navigate("/home");

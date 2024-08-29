@@ -1,4 +1,5 @@
 const { User } = require("../models");
+const { hashPassword } = require("../config/auth");
 
 // Obtener todos los usuarios
 exports.getAllUsers = async (req, res) => {
@@ -28,15 +29,23 @@ exports.getUserById = async (req, res) => {
 exports.createUser = async (req, res) => {
   try {
     const { nombreDeUsuario, email, password, fechaRegistro, rol } = req.body;
+
+    // Hashear la contraseña antes de guardar
+    console.log("Contraseña antes de hashear:", password);
+    const hashedPassword = await hashPassword(password);
+    console.log("Contraseña hasheada:", hashedPassword);
+
     const newUser = await User.create({
       nombreDeUsuario,
       email,
-      password,
+      password: hashedPassword, // Guardamos la contraseña hasheada
       fechaRegistro,
       rol,
     });
+
     res.status(201).json(newUser);
   } catch (error) {
+    console.error("Error creando usuario:", error.message);
     res.status(500).json({ message: error.message });
   }
 };
@@ -45,7 +54,16 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const [updated] = await User.update(req.body, { where: { id } });
+    const { password, ...restOfBody } = req.body;
+
+    // Si hay una contraseña en el cuerpo de la solicitud, hashearla
+    if (password) {
+      console.log("Contraseña antes de actualizar:", password);
+      restOfBody.password = await hashPassword(password);
+      console.log("Contraseña hasheada para actualizar:", restOfBody.password);
+    }
+
+    const [updated] = await User.update(restOfBody, { where: { id } });
     if (updated) {
       const updatedUser = await User.findByPk(id);
       res.status(200).json(updatedUser);
@@ -53,6 +71,7 @@ exports.updateUser = async (req, res) => {
       res.status(404).json({ message: "Usuario no encontrado" });
     }
   } catch (error) {
+    console.error("Error actualizando usuario:", error.message);
     res.status(500).json({ message: error.message });
   }
 };

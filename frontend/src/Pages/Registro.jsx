@@ -10,17 +10,18 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/auth/register", {
+    const response = await fetch("http://localhost:3000/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, email, password }),
+      // Cambia "username" a "nombreDeUsuario" para coincidir con el backend
+      body: JSON.stringify({ nombreDeUsuario: username, email, password }),
     });
 
     if (response.ok) {
       alert("Registro exitoso");
-      navigate("/login");
+      navigate("/");
     } else {
       alert("Error en el registro");
     }
@@ -67,4 +68,3 @@ function Register() {
 }
 
 export default Register;
-

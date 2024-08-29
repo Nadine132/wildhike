@@ -2,11 +2,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
-const SECRET_KEY = "1234";
+const SECRET_KEY = process.env.JWT_SECRET || "1234"; // Asegúrate de que esto coincide con el `SECRET_KEY` en el resto de la app.
 
 const hashPassword = async (password) => {
-  const salt = await bcrypt.genSalt(10);
-  return bcrypt.hash(password, salt);
+  return bcrypt.hash(password, 10);
 };
 
 const comparePassword = async (password, hashedPassword) => {
