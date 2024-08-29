@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": "1234",
+    "password": "Ibiza202113",
     "database": "wildhike",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "1234",
+    "password": "Ibiza202113",
     "database": "wildhike_test",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "1234",
+    "password": "Ibiza202113",
     "database": "wildhike_production",
     "host": "localhost",
     "dialect": "mysql"
