@@ -94,7 +94,15 @@ export default function CardGrid() {
                 <Typography textColor="neutral.300">Distancia: {ruta.distancia} km</Typography>
                 <Typography textColor="neutral.300">Duración: {ruta.duracion} horas</Typography>
                 <Typography startDecorator={<LocationOnRoundedIcon />} textColor="neutral.300">
-                  <a href={ruta.localizacion_url} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={
+                      ruta.localizacion_url.includes(',')
+                        ? `geo:${ruta.localizacion_url}`
+                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ruta.localizacion_url)}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Ver en mapa
                   </a>
                 </Typography>
