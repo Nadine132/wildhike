@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, CircularProgress, Button } from '@mui/material';
+import { Box, Typography, CircularProgress, Grid } from '@mui/material';
 import ImageDetails from './ImageDetails';
+import MapView from '../Components/MapView'; // Importa el componente MapView
+import axios from 'axios';
 
 const RouteDetails = () => {
   const { id } = useParams();
   const [ruta, setRuta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [coords, setCoords] = useState(null);
 
   useEffect(() => {
     const fetchRuta = async () => {
@@ -21,6 +24,15 @@ const RouteDetails = () => {
         }
         const data = await response.json();
         setRuta(data);
+
+        // Obtener coordenadas mediante geocodificación
+        if (data.nombre) {
+          const geocodeResponse = await axios.get(
+            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(data.nombre)}&format=json`
+          );
+          const { lat, lon } = geocodeResponse.data[0] || {};
+          setCoords({ lat: parseFloat(lat), lng: parseFloat(lon) });
+        }
       } catch (err) {
         setError('Error fetching data');
       } finally {
@@ -59,74 +71,45 @@ const RouteDetails = () => {
     );
   }
 
-  // Debugging: Check coordinates and address
-  console.log('Coordenadas:', ruta.coordenadas);
-  console.log('Dirección:', ruta.direccion);
-
-  // Build Google Maps URL based on coordinates or name
-  const buildMapUrl = () => {
-    if (ruta.coordenadas) {
-      // Assuming coordenadas is a string in the format "latitude,longitude"
-      return `https://www.google.com/maps?q=${encodeURIComponent(ruta.coordenadas)}`;
-    } else if (ruta.nombre) {
-      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ruta.nombre)}`;
-    } else {
-      return '#'; // Default URL or handle case when neither is available
-    }
-  };
-
   return (
     <Box p={3} sx={{ backgroundColor: '#f5f5f5' }}>
       <Typography variant="h4" gutterBottom align="center">
         {ruta.nombre}
       </Typography>
 
-      <Box sx={{ marginY: 6 }}>
-        <ImageDetails ruta_id={ruta.id} />
-      </Box>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <ImageDetails ruta_id={ruta.id} />
+          <Typography variant="body1" paragraph align="center">
+            <strong>Provincia:</strong> {ruta.provincia}
+          </Typography>
+          <Typography variant="body1" paragraph align="center">
+            <strong>Zona Natural:</strong> {ruta.zona_natural}
+          </Typography>
+        </Grid>
 
-      <Typography variant="body1" paragraph align="center">
-        <strong>Provincia:</strong> {ruta.provincia}
-      </Typography>
+        <Grid item xs={12} md={6}>
+          <Typography variant="body1" paragraph align="center">
+            <strong>Estimación:</strong> {ruta.estimacion}
+          </Typography>
+          <Typography variant="body1" paragraph align="center">
+            <strong>Duración:</strong> {ruta.duracion} horas
+          </Typography>
+          <Typography variant="body1" paragraph align="center">
+            <strong>Dificultad:</strong> {ruta.dificultad}
+          </Typography>
+          <Typography variant="body1" paragraph align="center">
+            <strong>Distancia:</strong> {ruta.distancia} km
+          </Typography>
+          <Typography variant="body1" paragraph align="center">
+            <strong>Desnivel:</strong> {ruta.desnivel} metros
+          </Typography>
 
-      <Typography variant="body1" paragraph align="center">
-        <strong>Descripción:</strong> {ruta.descripcion}
-      </Typography>
-
-      <Typography variant="body1" paragraph align="center">
-        <strong>Zona Natural:</strong> {ruta.zona_natural}
-      </Typography>
-
-      <Typography variant="body1" paragraph align="center">
-        <strong>Estimación:</strong> {ruta.estimacion}
-      </Typography>
-
-      <Typography variant="body1" paragraph align="center">
-        <strong>Duración:</strong> {ruta.duracion} horas
-      </Typography>
-
-      <Typography variant="body1" paragraph align="center">
-        <strong>Dificultad:</strong> {ruta.dificultad}
-      </Typography>
-
-      <Typography variant="body1" paragraph align="center">
-        <strong>Distancia:</strong> {ruta.distancia} km
-      </Typography>
-
-      <Typography variant="body1" paragraph align="center">
-        <strong>Desnivel:</strong> {ruta.desnivel} metros
-      </Typography>
-
-      <Box display="flex" justifyContent="center" mt={2}>
-        <Button
-          variant="contained"
-          href={buildMapUrl()} // Ensure the URL is properly formatted
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Ver Localización
-        </Button>
-      </Box>
+          {coords && (
+            <MapView lat={coords.lat} lng={coords.lng} nombre={ruta.nombre} />
+          )}
+        </Grid>
+      </Grid>
     </Box>
   );
 };
