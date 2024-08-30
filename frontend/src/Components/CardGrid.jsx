@@ -3,16 +3,16 @@ import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { Grid } from '@mui/material';
+import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded'; // Unused import
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Importa useNavigate para la redirección
+import { useNavigate } from 'react-router-dom';
 
 export default function CardGrid() {
   const [rutasData, setRutasData] = useState([]); // Estado para guardar los datos de rutas
   const [loading, setLoading] = useState(true); // Estado para el loading
-  const navigate = useNavigate();  // Hook para redireccionar
+  const navigate = useNavigate(); // Hook para redireccionar
 
   // Obtener rutas y galerías
   useEffect(() => {
@@ -32,9 +32,12 @@ export default function CardGrid() {
         const rutasSeleccionadas = rutas.sort(() => Math.random() - 0.5).slice(0, 4);
 
         // Asignar las imágenes a las rutas
-        const rutasConImagenes = rutasSeleccionadas.map(ruta => {
-          const firstImage = galerias.find(image => image.ruta_id === ruta.id);
-          return { ...ruta, imageUrl: firstImage ? firstImage.url_imagen : 'https://via.placeholder.com/300' };
+        const rutasConImagenes = rutasSeleccionadas.map((ruta) => {
+          const firstImage = galerias.find((image) => image.ruta_id === ruta.id);
+          return {
+            ...ruta,
+            imageUrl: firstImage ? firstImage.url_imagen : 'https://via.placeholder.com/300',
+          };
         });
 
         setRutasData(rutasConImagenes);
@@ -44,6 +47,7 @@ export default function CardGrid() {
         setLoading(false);
       }
     };
+
     fetchData(); // Llamamos a la función para que se ejecute cuando el componente se monte
   }, []); // El array vacío significa que esto corre solo una vez al montar el componente
 
@@ -53,35 +57,8 @@ export default function CardGrid() {
 
   // Función para manejar el click en la imagen
   const handleImageClick = (rutaId) => {
-    navigate(`/rutas/${rutaId}`);  // Redirigir al componente RouteDetails con el ID de la ruta
+    navigate(`/rutas/${rutaId}`); // Redirigir al componente RouteDetails con el ID de la ruta
   };
-
-
-  // Obtener rutas y galerías
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Aquí hacemos la solicitud a la API con la URL correcta
-        const rutasResponse = await axios.get('http://localhost:3000/api/rutas'); // Verifica la URL correcta
-        const rutas = rutasResponse.data;
-
-        // Verificar si rutas es un array
-        if (!Array.isArray(rutas)) {
-          throw new Error('La respuesta de rutas no es un array');
-        }
-
-        // Seleccionar las primeras 4 rutas o aleatorias
-        const rutasSeleccionadas = rutas.sort(() => Math.random() - 0.5).slice(0, 4);
-
-        setRutasData(rutasSeleccionadas);
-      } catch (error) {
-        console.error('Error fetching rutas:', error.message);
-        console.error(error); // Imprimir el error completo
-      }
-    };
-
-    fetchData(); // Llamamos a la función para que se ejecute cuando el componente se monte
-  }, []); // El array vacío significa que esto corre solo una vez al montar el componente
 
   return (
     <Grid container spacing={3} sx={{ justifyContent: 'center', maxWidth: '100%' }}>
@@ -92,12 +69,12 @@ export default function CardGrid() {
               sx={{
                 height: '400px',
                 width: 300,
-                cursor: 'pointer',  // Cambia el cursor cuando pasas el mouse sobre la tarjeta
+                cursor: 'pointer', // Cambia el cursor cuando pasas el mouse sobre la tarjeta
                 '&:hover img': {
-                  transform: 'scale(1.1)',  // Ampliar la imagen al pasar el ratón
-                }
+                  transform: 'scale(1.1)', // Ampliar la imagen al pasar el ratón
+                },
               }}
-              onClick={() => handleImageClick(ruta.id)}  // Añade el evento de click para redireccionar
+              onClick={() => handleImageClick(ruta.id)} // Añade el evento de click para redireccionar
             >
               <CardCover>
                 <img
@@ -108,7 +85,7 @@ export default function CardGrid() {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    transition: 'transform 0.3s ease-in-out'  // Transición suave en la ampliación
+                    transition: 'transform 0.3s ease-in-out', // Transición suave en la ampliación
                   }}
                 />
               </CardCover>

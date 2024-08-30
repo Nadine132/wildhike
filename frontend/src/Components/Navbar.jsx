@@ -23,7 +23,6 @@ import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getToken, removeToken } from '../utils/auth';
-import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
 const userId = localStorage.getItem("userId");

@@ -11,7 +11,7 @@ const zonasData = [
   { src: 'https://images.pexels.com/photos/286579/pexels-photo-286579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Zona 1', location: 'Ubicación 1' },
   { src: 'https://images.pexels.com/photos/3668200/pexels-photo-3668200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Zona 2', location: 'Ubicación 2' },
   { src: 'https://images.pexels.com/photos/3426361/pexels-photo-3426361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Zona 3', location: 'Ubicación 3' },
-  { src: 'https://images.pexels.com/photos/551854/pexels-photo-551854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Zona 4', location: 'Ubicación 4' },
+ 
 ];
 
 export default function Zonas() {
