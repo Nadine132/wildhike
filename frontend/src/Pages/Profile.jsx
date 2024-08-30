@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../axiosConfig';
+import { useNavigate } from 'react-router-dom';
 import { getToken } from '../utils/auth';
 
 function Profile() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const token = getToken();
-        const response = await axios.get('/usuarios/profile', {
+        const userId = localStorage.getItem("userId");
+
+        if (!userId) {
+          console.error('No se encontró el ID de usuario');
+          navigate('/login');
+          return;
+        }
+
+        const response = await axios.get(`/usuarios/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -21,7 +31,7 @@ function Profile() {
     };
 
     fetchUserProfile();
-  }, []);
+  }, [navigate]);
 
   if (!user) return <div>Cargando perfil...</div>;
 

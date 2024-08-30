@@ -22,12 +22,13 @@ import HomeIcon from '@mui/icons-material/Home';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { getToken, removeToken } from '../utils/auth'; // Asegúrate de importar getToken y removeToken
+import { getToken, removeToken } from '../utils/auth';
 import { useLocation } from 'react-router-dom';
 import Footer from './Footer';
 
+const userId = localStorage.getItem("userId");
 const routes = ["Home", "Contacto", "Rutas", "Perfil"];
-const routePath = ["/home", "/contacto", "/rutas", "/profile"];
+const routePath = ["/home", "/contacto", "/rutas", `/profile/${userId}`];
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -117,11 +118,11 @@ export default function PersistentDrawerLeft() {
           </Typography>
           {isLoggedIn ? (
             <IconButton onClick={handleLogout} edge="end" sx={{ color: 'black' }}>
-              <AccountCircleIcon /> {/* Icono para cerrar sesión */}
+              <LoginIcon /> {/* Icono para cerrar sesión */}
             </IconButton>
           ) : (
             <IconButton component={Link} to="/" edge="end" sx={{ color: 'black' }}>
-              <LoginIcon /> {/* Icono para iniciar sesión */}
+              <AccountCircleIcon /> {/* Icono para iniciar sesión */}
             </IconButton>
           )}
         </Toolbar>

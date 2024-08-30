@@ -26,7 +26,9 @@ exports.login = async (req, res) => {
     }
 
     const token = generateToken(user);
-    res.status(200).json({ token });
+
+    // Incluimos el userId en la respuesta junto con el token
+    res.status(200).json({ token, userId: user.id });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

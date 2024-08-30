@@ -14,10 +14,13 @@ function Login() {
         credential,
         password,
       });
+
       console.log("Respuesta de la API:", response);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        navigate("/home");
+        localStorage.setItem("userId", response.data.userId);
+
+        navigate(`/profile/${response.data.userId}`);
       }
     } catch (error) {
       console.error("Login error:", error);
