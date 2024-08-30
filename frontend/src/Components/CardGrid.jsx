@@ -56,33 +56,6 @@ export default function CardGrid() {
     navigate(`/rutas/${rutaId}`);  // Redirigir al componente RouteDetails con el ID de la ruta
   };
 
-
-  // Obtener rutas y galerías
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Aquí hacemos la solicitud a la API con la URL correcta
-        const rutasResponse = await axios.get('http://localhost:3000/api/rutas'); // Verifica la URL correcta
-        const rutas = rutasResponse.data;
-
-        // Verificar si rutas es un array
-        if (!Array.isArray(rutas)) {
-          throw new Error('La respuesta de rutas no es un array');
-        }
-
-        // Seleccionar las primeras 4 rutas o aleatorias
-        const rutasSeleccionadas = rutas.sort(() => Math.random() - 0.5).slice(0, 4);
-
-        setRutasData(rutasSeleccionadas);
-      } catch (error) {
-        console.error('Error fetching rutas:', error.message);
-        console.error(error); // Imprimir el error completo
-      }
-    };
-
-    fetchData(); // Llamamos a la función para que se ejecute cuando el componente se monte
-  }, []); // El array vacío significa que esto corre solo una vez al montar el componente
-
   return (
     <Grid container spacing={3} sx={{ justifyContent: 'center', maxWidth: '100%' }}>
       {rutasData.length > 0 ? (
