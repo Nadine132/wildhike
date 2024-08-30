@@ -59,14 +59,28 @@ const RouteDetails = () => {
     );
   }
 
+  // Debugging: Check coordinates and address
+  console.log('Coordenadas:', ruta.coordenadas);
+  console.log('Dirección:', ruta.direccion);
+
+  // Build Google Maps URL based on coordinates or name
+  const buildMapUrl = () => {
+    if (ruta.coordenadas) {
+      // Assuming coordenadas is a string in the format "latitude,longitude"
+      return `https://www.google.com/maps?q=${encodeURIComponent(ruta.coordenadas)}`;
+    } else if (ruta.nombre) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ruta.nombre)}`;
+    } else {
+      return '#'; // Default URL or handle case when neither is available
+    }
+  };
+
   return (
     <Box p={3} sx={{ backgroundColor: '#f5f5f5' }}>
-      {/* Nombre de la ruta arriba de las imágenes */}
       <Typography variant="h4" gutterBottom align="center">
         {ruta.nombre}
       </Typography>
 
-      {/* Componente para mostrar las imágenes */}
       <Box sx={{ marginY: 6 }}>
         <ImageDetails ruta_id={ruta.id} />
       </Box>
@@ -106,12 +120,9 @@ const RouteDetails = () => {
       <Box display="flex" justifyContent="center" mt={2}>
         <Button
           variant="contained"
-          href={
-            ruta.coordenadas
-              ? `https://www.google.com/maps?q=${encodeURIComponent(ruta.coordenadas)}`
-              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ruta.direccion)}`
-          }
+          href={buildMapUrl()} // Ensure the URL is properly formatted
           target="_blank"
+          rel="noopener noreferrer"
         >
           Ver Localización
         </Button>
