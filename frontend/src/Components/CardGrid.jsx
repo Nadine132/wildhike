@@ -56,7 +56,6 @@ export default function CardGrid() {
     navigate(`/rutas/${rutaId}`);  // Redirigir al componente RouteDetails con el ID de la ruta
   };
 
-  const [rutasData, setRutasData] = useState([]); // Estado para guardar los datos de rutas
 
   // Obtener rutas y galerías
   useEffect(() => {
