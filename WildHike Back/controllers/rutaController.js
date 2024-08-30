@@ -93,3 +93,21 @@ exports.deleteRuta = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getRutasByProvincia = async (req, res) => {
+  try {
+    const rutas = await Ruta.findAll({
+      where: { provincia: req.params.provincia },
+    });
+
+    if (rutas.length > 0) {
+      res.status(200).json(rutas);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No se encontraron rutas en esta provincia" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
