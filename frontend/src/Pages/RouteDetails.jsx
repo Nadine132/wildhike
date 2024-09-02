@@ -4,12 +4,14 @@ import { Box, Typography, CircularProgress, Grid, Paper } from '@mui/material';
 import ImageDetails from './ImageDetails';
 import MapView from '../Components/MapView';
 import axios from 'axios';
+
 const RouteDetails = () => {
   const { id } = useParams();
   const [ruta, setRuta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [coords, setCoords] = useState(null);
+
   useEffect(() => {
     const fetchRuta = async () => {
       setLoading(true);
@@ -36,6 +38,7 @@ const RouteDetails = () => {
     };
     fetchRuta();
   }, [id]);
+
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
@@ -43,6 +46,7 @@ const RouteDetails = () => {
       </Box>
     );
   }
+
   if (error) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
@@ -52,6 +56,7 @@ const RouteDetails = () => {
       </Box>
     );
   }
+
   if (!ruta) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
@@ -61,28 +66,29 @@ const RouteDetails = () => {
       </Box>
     );
   }
+
   return (
     <Box p={3} sx={{ backgroundColor: '#E8F5E9' }}>
-      <Typography variant="h4" gutterBottom align="center">
+      <Typography variant="h4" gutterBottom align="center" sx={{ mb: 3 }}>
         {ruta.nombre}
       </Typography>
-      <Paper elevation={3} sx={{ p: 2 }}>
-        <Grid container spacing={4} justifyContent="center" alignItems="center">
-          <Grid item xs={12} align="center">
-            <ImageDetails ruta_id={ruta.id} />
-            <Typography variant="body1" paragraph align="center">
-              {ruta.descripcion}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            {coords && (
-              <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
-                <MapView lat={coords.lat} lng={coords.lng} nombre={ruta.nombre} />
-              </Box>
-            )}
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box display="flex" flexDirection="column" justifyContent="center" alignItems="flex-start">
+      <Box display="flex" flexWrap="wrap" justifyContent="center" gap={2} sx={{ mb: 3 }}>
+        <ImageDetails ruta_id={ruta.id} />
+      </Box>
+      <Typography variant="body1" paragraph align="center" sx={{ mb: 3 }}>
+        {ruta.descripcion}
+      </Typography>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={8}>
+          {coords && (
+            <Box sx={{ height: '400px', mb: 3 }}>
+              <MapView lat={coords.lat} lng={coords.lng} nombre={ruta.nombre} />
+            </Box>
+          )}
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} sx={{ p: 2 }}>
+            <Box display="flex" flexDirection="column" justifyContent="center">
               <Typography variant="body1" paragraph>
                 <strong>Provincia:</strong> {ruta.provincia}
               </Typography>
@@ -105,10 +111,11 @@ const RouteDetails = () => {
                 <strong>Desnivel:</strong> {ruta.desnivel} metros
               </Typography>
             </Box>
-          </Grid>
+          </Paper>
         </Grid>
-      </Paper>
+      </Grid>
     </Box>
   );
 };
+
 export default RouteDetails;
