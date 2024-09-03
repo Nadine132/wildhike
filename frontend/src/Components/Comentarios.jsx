@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import axios from 'axios';
 
-const Comentarios = ({ rutaId, user }) => {
+const Comentarios = ({ rutaId }) => {
   const [comentarios, setComentarios] = useState([]); // Inicializa como un array vacío
   const [newComentario, setNewComentario] = useState('');
   const [page, setPage] = useState(1);
+
+  // Obtén el usuario desde el localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchComentarios = async () => {
@@ -32,9 +35,9 @@ const Comentarios = ({ rutaId, user }) => {
       const comentarioData = {
         comentario: newComentario,
         ruta_id: rutaId,
-        usuario_id: user ? user.id : null,
+        usuario_id: user ? user.id : null, // Asegúrate de que user es correcto
       };
-  
+      
       console.log("Sending comentario data:", comentarioData);
       
       await axios.post('http://localhost:3000/api/comentarios', comentarioData); 
