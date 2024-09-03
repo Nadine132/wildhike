@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Card, CardContent, Typography, Button, CircularProgress, Box, Pagination } from '@mui/material';
 import Imagen from '../Components/Imagen';
+import FavoriteButton from '../Components/FavoriteButtom';
 
 const Rutas = () => {
   const [rutas, setRutas] = useState([]);
@@ -86,13 +87,11 @@ const Rutas = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Box
-       sx={{ position: 'relative', flexGrow: 1, width: '100%', overflowX: 'hidden' }}>
-      <Imagen />    {/* Renderiza la imagen */}
-    </Box>
-      
+      <Box sx={{ position: 'relative', flexGrow: 1, width: '100%', overflowX: 'hidden' }}>
+        <Imagen /> {/* Renderiza la imagen */}
+      </Box>
 
-      <Typography variant="h4" gutterBottom align="center" marginBottom="50px" marginTop= "30px">
+      <Typography variant="h4" gutterBottom align="center" marginBottom="50px" marginTop="30px">
         Rutas
       </Typography>
 
@@ -124,6 +123,10 @@ const Rutas = () => {
                     <Typography variant="body2" color="text.secondary" align="center" sx={{ flexGrow: 1 }}>
                       {ruta.descripcion}
                     </Typography>
+                    {/* Centramos el botón de favoritos */}
+                    <Box display="flex" justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+                      <FavoriteButton rutaId={ruta.id} />
+                    </Box>
                     <Button
                       component={Link}
                       to={`/rutas/${ruta.id}`}

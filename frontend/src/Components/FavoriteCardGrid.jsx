@@ -4,52 +4,54 @@ import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import { Grid } from '@mui/material';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded'; // Unused import
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import FavoriteButton from './FavoriteButtom';
+import FavoriteButton from './FavoriteButtom';// Reutiliza el botón de favoritos
 
-export default function CardGrid() {
-  const [rutasData, setRutasData] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function FavoriteCardGrid({ favoritos }) {
+  const [rutasFavoritas, setRutasFavoritas] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchRutasFavoritas = async () => {
       try {
-        const rutasResponse = await axios.get('http://localhost:3000/api/rutas');
+        const rutasPromises = favoritos.map(favorito => 
+          axios.get(`http://localhost:3000/api/rutas/${favorito.ruta_id}`)
+        );
+        const rutasResponses = await Promise.all(rutasPromises);
+        const rutasData = rutasResponses.map(response => response.data);
+
+        // Obtener las galerías para las imágenes
         const galeriasResponse = await axios.get('http://localhost:3000/api/galerias');
-        const rutas = rutasResponse.data;
         const galerias = galeriasResponse.data;
 
-        const rutasConImagenes = rutas.map(ruta => {
+        // Asignar las imágenes a las rutas favoritas
+        const rutasConImagenes = rutasData.map(ruta => {
           const firstImage = galerias.find(image => image.ruta_id === ruta.id);
-          return { ...ruta, imageUrl: firstImage ? firstImage.url_imagen : 'https://via.placeholder.com/300' };
+          return { 
+            ...ruta, 
+            imageUrl: firstImage ? firstImage.url_imagen : 'https://via.placeholder.com/300' 
+          };
         });
 
-        setRutasData(rutasConImagenes);
+        setRutasFavoritas(rutasConImagenes);
       } catch (error) {
-        console.error('Error fetching rutas o imágenes:', error.message);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching rutas favoritas:', error.message);
       }
     };
-    fetchData();
-  }, []);
+
+    fetchRutasFavoritas();
+  }, [favoritos]);
 
   const handleFavoriteChange = () => {
     // Aquí puedes manejar cambios en los favoritos si es necesario
   };
 
-  if (loading) {
-    return <Typography>Cargando rutas de senderismo...</Typography>;
-  }
-
   return (
     <Grid container spacing={3} sx={{ justifyContent: 'center', maxWidth: '100%' }}>
-      {rutasData.length > 0 ? (
-        rutasData.map((ruta) => (
+      {rutasFavoritas.length > 0 ? (
+        rutasFavoritas.map((ruta) => (
           <Grid item key={ruta.id}>
             <Card
               sx={{
@@ -89,9 +91,8 @@ export default function CardGrid() {
           </Grid>
         ))
       ) : (
-        <Typography>No hay rutas disponibles</Typography>
+        <Typography>No tienes rutas favoritas.</Typography>
       )}
     </Grid>
   );
 }
-

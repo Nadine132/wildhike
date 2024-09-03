@@ -3,7 +3,7 @@ import axios from '../axiosConfig';
 import { getToken } from '../utils/auth';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
-function FavoriteButton({ rutaId }) {
+function FavoriteButton({ rutaId, onFavoriteChange }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoritoId, setFavoritoId] = useState(null);
 
@@ -18,27 +18,35 @@ function FavoriteButton({ rutaId }) {
           return;
         }
 
-        const response = await axios.get(`/favoritos?usuario_id=${userId}&ruta_id=${rutaId}`, {
+        const response = await axios.get(`/favoritos/buscar?usuario_id=${userId}&ruta_id=${rutaId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (response.data.length > 0) {
+        if (response.data && response.data.id) {
           setIsFavorite(true);
-          setFavoritoId(response.data[0].id);
+          setFavoritoId(response.data.id);
         } else {
           setIsFavorite(false);
+          setFavoritoId(null);
         }
       } catch (error) {
-        console.error('Error checking if favorite:', error);
+        if (error.response && error.response.status === 404) {
+          setIsFavorite(false);
+          setFavoritoId(null);
+        } else {
+          console.error('Error checking if favorite:', error);
+        }
       }
     };
 
     checkIfFavorite();
   }, [rutaId]);
 
-  const handleToggleFavorite = async () => {
+  const handleToggleFavorite = async (event) => {
+    event.stopPropagation();
+
     const token = getToken();
     const userId = localStorage.getItem("userId");
 
@@ -49,7 +57,6 @@ function FavoriteButton({ rutaId }) {
 
     try {
       if (isFavorite) {
-        // Eliminar
         await axios.delete(`/favoritos/${favoritoId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +65,6 @@ function FavoriteButton({ rutaId }) {
         setIsFavorite(false);
         setFavoritoId(null);
       } else {
-        // Añadir
         const response = await axios.post('/favoritos', {
           usuario_id: userId,
           ruta_id: rutaId,
@@ -70,6 +76,11 @@ function FavoriteButton({ rutaId }) {
         setIsFavorite(true);
         setFavoritoId(response.data.id);
       }
+
+      if (onFavoriteChange) {
+        onFavoriteChange();
+      }
+
     } catch (error) {
       console.error('Error toggling favorite:', error);
     }

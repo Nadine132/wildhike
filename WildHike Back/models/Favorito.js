@@ -9,19 +9,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     usuario_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: "Usuarios",
-        key: "id",
-      },
+      allowNull: false,
     },
     ruta_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: "Ruta",
-        key: "id",
-      },
+      allowNull: false,
     },
   });
+
+  Favorito.associate = function (models) {
+    Favorito.belongsTo(models.Ruta, { foreignKey: "ruta_id", as: "ruta" });
+    Favorito.belongsTo(models.User, {
+      foreignKey: "usuario_id",
+      as: "usuario",
+    });
+  };
 
   return Favorito;
 };
