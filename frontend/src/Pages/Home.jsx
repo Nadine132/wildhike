@@ -18,8 +18,20 @@ function Home() {
         <ProvinciaSelect /> {/* Renderiza el componente select */}
       </Box>
       
+
+        {/* Espacio entre secciones */}
+        <Box sx={{ marginTop: 2 }}>
+          {/* Título "Zonas" */}
+          <Typography variant="h4" component="h2" align="center"   sx={{ marginBottom: 2 }}>
+            Zonas
+          </Typography>
+
+          {/* Contenedor para las zonas */}
+          <Zonas />  {/* Renderiza las zonas */}
+        </Box>
+
       {/* Contenedor de las recomendaciones y las tarjetas */}
-      <Box sx={{ marginTop: 2, padding: 2 }}>
+      <Box sx={{ marginTop: 6, padding: 2, marginBottom: 10 }}>
         {/* Texto "Recomendaciones" */}
         <Typography variant="h4" component="h2" align="center" sx={{ marginBottom: 2 }}>
           Recomendaciones
@@ -28,16 +40,6 @@ function Home() {
         {/* Contenedor para las tarjetas */}
         <CardGrid />  {/* Renderiza el grid de tarjetas */}
 
-        {/* Espacio entre secciones */}
-        <Box sx={{ marginTop: 8 }}>
-          {/* Título "Zonas" */}
-          <Typography variant="h4" component="h2" align="center" sx={{ marginBottom: 2 }}>
-            Zonas
-          </Typography>
-
-          {/* Contenedor para las zonas */}
-          <Zonas />  {/* Renderiza las zonas */}
-        </Box>
       </Box>
     </div>
   );
