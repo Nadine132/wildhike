@@ -8,14 +8,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    rating: {
+    usuario_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      references: {
+        model: "User",
+        key: "id",
+      },
+    },
+    ruta_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "Ruta",
+        key: "id",
+      },
     },
   });
 
   Comentario.associate = (models) => {
-    Comentario.belongsTo(models.Usuario, {
+    Comentario.belongsTo(models.User, {
       foreignKey: "usuario_id",
       as: "usuario",
     });
