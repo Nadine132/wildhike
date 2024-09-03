@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress, Button } from '@mui/material';
 import ImageDetails from './ImageDetails';
+import FavoriteButton from '../Components/FavoriteButtom';
 
 const RouteDetails = () => {
   const { id } = useParams();
@@ -59,19 +60,14 @@ const RouteDetails = () => {
     );
   }
 
-  // Debugging: Check coordinates and address
-  console.log('Coordenadas:', ruta.coordenadas);
-  console.log('Dirección:', ruta.direccion);
-
   // Build Google Maps URL based on coordinates or name
   const buildMapUrl = () => {
     if (ruta.coordenadas) {
-      // Assuming coordenadas is a string in the format "latitude,longitude"
       return `https://www.google.com/maps?q=${encodeURIComponent(ruta.coordenadas)}`;
     } else if (ruta.nombre) {
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ruta.nombre)}`;
     } else {
-      return '#'; // Default URL or handle case when neither is available
+      return '#';
     }
   };
 
@@ -80,6 +76,11 @@ const RouteDetails = () => {
       <Typography variant="h4" gutterBottom align="center">
         {ruta.nombre}
       </Typography>
+
+      {/* Centraliza el botón de favoritos */}
+      <Box display="flex" justifyContent="center" mb={2}>
+        <FavoriteButton rutaId={ruta.id} />
+      </Box>
 
       <Box sx={{ marginY: 6 }}>
         <ImageDetails ruta_id={ruta.id} />
@@ -120,7 +121,7 @@ const RouteDetails = () => {
       <Box display="flex" justifyContent="center" mt={2}>
         <Button
           variant="contained"
-          href={buildMapUrl()} // Ensure the URL is properly formatted
+          href={buildMapUrl()}
           target="_blank"
           rel="noopener noreferrer"
         >

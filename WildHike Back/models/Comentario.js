@@ -1,21 +1,8 @@
-const { DataTypes } = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
   const Comentario = sequelize.define("Comentario", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    RutasRealizadas_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "RutasRealizadas",
-        key: "id",
-      },
-    },
     comentario: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     fecha: {
       type: DataTypes.DATE,
@@ -23,8 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     rating: {
       type: DataTypes.INTEGER,
+      allowNull: true,
     },
   });
+
+  Comentario.associate = (models) => {
+    Comentario.belongsTo(models.Usuario, {
+      foreignKey: "usuario_id",
+      as: "usuario",
+    });
+    Comentario.belongsTo(models.Ruta, { foreignKey: "ruta_id", as: "ruta" });
+  };
 
   return Comentario;
 };
