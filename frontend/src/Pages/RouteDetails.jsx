@@ -6,6 +6,7 @@ import MapView from '../Components/MapView';
 import FavoriteButton from '../Components/FavoriteButtom';
 import Comentarios from '../Components/Comentarios'; // Importa el componente Comentarios
 import axios from 'axios';
+
 const RouteDetails = () => {
   const { id } = useParams();
   const [ruta, setRuta] = useState(null);
@@ -45,6 +46,7 @@ const RouteDetails = () => {
     fetchRuta();
     fetchUser(); // Simula la obtención de un usuario autenticado
   }, [id]);
+
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
@@ -52,6 +54,7 @@ const RouteDetails = () => {
       </Box>
     );
   }
+
   if (error) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
@@ -61,6 +64,7 @@ const RouteDetails = () => {
       </Box>
     );
   }
+
   if (!ruta) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
@@ -82,7 +86,7 @@ const RouteDetails = () => {
   };
   return (
     <Box p={3} sx={{ backgroundColor: '#E8F5E9' }}>
-      <Typography variant="h4" gutterBottom align="center">
+      <Typography variant="h4" gutterBottom align="center" sx={{ mb: 3 }}>
         {ruta.nombre}
       </Typography>
       {/* Centraliza el botón de favoritos */}
@@ -146,4 +150,5 @@ const RouteDetails = () => {
     </Box>
   );
 };
+
 export default RouteDetails;

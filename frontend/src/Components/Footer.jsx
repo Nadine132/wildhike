@@ -7,7 +7,7 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        backgroundColor: 'lightgray',
+        backgroundColor: '#4d4d4d',
         padding: '16px',
         textAlign: 'center',
         position: 'relative',
@@ -15,19 +15,19 @@ export default function Footer() {
         width: '100%',
       }}
     >
-      <Typography variant="body2" color="textSecondary">
+      <Typography variant="body2" color="white">
         &copy; 2024 Tu Empresa. Todos los derechos reservados.
       </Typography>
-      <Typography variant="body2" color="textSecondary" sx={{ marginTop: '8px' }}>
-        <Link to="/politica-de-privacidad" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Typography variant="body2" color="white" sx={{ marginTop: '8px' }}>
+        <Link to="/politica-de-privacidad" style={{ textDecoration: 'none', color: 'white' }}>
           Política de Privacidad
         </Link>
       </Typography>
-      <Typography variant="body2" color="textSecondary" sx={{ marginTop: '8px' }}>
+      <Typography variant="body2" color="white" sx={{ marginTop: '8px' }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </Typography>
-      <Typography variant="body2" color="textSecondary" sx={{ marginTop: '8px' }}>
-        <Link to="/contacto" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Typography variant="body2" color="white" sx={{ marginTop: '8px' }}>
+        <Link to="/contacto" style={{ textDecoration: 'none', color: 'white' }}>
           Contáctenos
         </Link>
       </Typography>
