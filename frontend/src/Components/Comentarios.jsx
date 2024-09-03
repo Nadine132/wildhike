@@ -8,7 +8,7 @@ const Comentarios = ({ rutaId }) => {
   const [page, setPage] = useState(1);
 
   // Obtén el usuario desde el localStorage
-  const user = JSON.parse(localStorage.getItem("user"));
+const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchComentarios = async () => {
@@ -35,7 +35,7 @@ const Comentarios = ({ rutaId }) => {
       const comentarioData = {
         comentario: newComentario,
         ruta_id: rutaId,
-        usuario_id: user ? user.id : null, // Asegúrate de que user es correcto
+        usuario_id: userId || null, // Asegúrate de que user es correcto
       };
       
       console.log("Sending comentario data:", comentarioData);
@@ -94,7 +94,7 @@ const Comentarios = ({ rutaId }) => {
             <Typography variant="body1" mt={1}>
               {comentario.comentario}
             </Typography>
-            {user && user.id === comentario.usuario_id && (
+            {userId === comentario.usuario_id && (
               <Button variant="outlined" color="secondary" onClick={() => handleDeleteComentario(comentario.id)}>
                 Eliminar
               </Button>
