@@ -6,11 +6,10 @@ export default function ImageDetails({ruta_id}) {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Función para obtener las imágenes
   const fetchImages = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/galerias'); // Verifica que este endpoint sea correcto
-      setImages(response.data); // Asegúrate de que response.data contiene las URLs correctas
+      const response = await axios.get('http://localhost:3000/api/galerias');
+      setImages(response.data);
     } catch (error) {
       console.error('Error fetching images:', error.message);
     } finally {
@@ -38,7 +37,7 @@ export default function ImageDetails({ruta_id}) {
           <Grid item key={image.id}>
             <div>
               <img
-                src={image.url_imagen} // Asegúrate de que las URLs sean correctas y accesibles
+                src={image.url_imagen}
                 alt={`Imagen ${image.id}`}
                 style={{ width: '300px', height: 'auto' }}
               />
@@ -48,5 +47,4 @@ export default function ImageDetails({ruta_id}) {
       ))}
     </Grid>
   );
-  
 }

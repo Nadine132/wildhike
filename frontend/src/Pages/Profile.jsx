@@ -3,10 +3,12 @@ import axios from '../axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { getToken } from '../utils/auth';
 import FavoriteCardGrid from '../Components/FavoriteCardGrid';
+import '../styles/Profile.css';
 
 function Profile() {
   const [user, setUser] = useState(null);
   const [favoritos, setFavoritos] = useState([]);
+  const [rutasRealizadas, setRutasRealizadas] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,10 +35,17 @@ function Profile() {
           }
         });
 
+        const rutasRealizadasResponse = await axios.get(`/rutas-realizadas`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
         setUser(userResponse.data);
         setFavoritos(favoritosResponse.data);
+        setRutasRealizadas(rutasRealizadasResponse.data);
       } catch (error) {
-        console.error('Error fetching user profile or favorites:', error);
+        console.error('Error fetching user profile, favorites, or completed routes:', error);
       }
     };
 
@@ -56,6 +65,13 @@ function Profile() {
         <FavoriteCardGrid favoritos={favoritos} />
       ) : (
         <p>No tienes rutas favoritas.</p>
+      )}
+
+      <h3>Rutas Completadas:</h3>
+      {rutasRealizadas.length > 0 ? (
+        <FavoriteCardGrid favoritos={rutasRealizadas} />
+      ) : (
+        <p>No has completado ninguna ruta.</p>
       )}
     </div>
   );

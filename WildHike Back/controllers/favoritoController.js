@@ -1,6 +1,6 @@
 const { Favorito, Ruta } = require("../models");
 
-// Obtener todos los favoritos, posiblemente filtrado por usuario_id
+// Obtener todos los favoritos
 exports.getAllFavoritos = async (req, res) => {
   try {
     const whereClause = req.query.usuario_id
@@ -47,7 +47,6 @@ exports.createFavorito = async (req, res) => {
   try {
     const { usuario_id, ruta_id } = req.body;
 
-    // Verificar si ya existe el favorito
     const existingFavorito = await Favorito.findOne({
       where: { usuario_id, ruta_id },
     });

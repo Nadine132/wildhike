@@ -1,58 +1,61 @@
+// Components/Zonas.jsx
 import React from 'react';
 import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { Grid } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import FavoriteButton from './FavoriteButtom';
 
-// Lista de imágenes, títulos y ubicaciones
-const zonasData = [
-  { src: 'https://images.pexels.com/photos/286579/pexels-photo-286579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Zona 1', location: 'Ubicación 1' },
-  { src: 'https://images.pexels.com/photos/3668200/pexels-photo-3668200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Zona 2', location: 'Ubicación 2' },
-  { src: 'https://images.pexels.com/photos/3426361/pexels-photo-3426361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Zona 3', location: 'Ubicación 3' },
-];
+export default function Zonas({ rutas = [] }) {
+  const navigate = useNavigate();
 
-export default function Zonas() {
   return (
     <Grid container spacing={3} sx={{ justifyContent: 'center', maxWidth: '100%' }}>
-      {zonasData.map((zona, index) => (
-        <Grid item key={index}>
-          <Card sx={{ height: '300px', width: 280, position: 'relative', overflow: 'hidden' }}>
-            <CardCover sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-              <img
-                src={zona.src}
-                srcSet={`${zona.src} 2x`}
-                loading="lazy"
-                alt={zona.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            </CardCover>
-            <CardCover
+      {rutas.length > 0 ? (
+        rutas.map((ruta) => (
+          <Grid item key={ruta.id}>
+            <Card
               sx={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: '50%',
-                background:
-                  'linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 200px), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 300px)',
+                height: '400px',
+                width: 300,
+                cursor: 'pointer',
+                '&:hover img': {
+                  transform: 'scale(1.1)',
+                },
               }}
-            />
-            <CardContent sx={{ position: 'absolute', bottom: 0, left: 0, right: 0, color: '#fff', background: 'rgba(0,0,0,0.4)', p: 1 }}>
-              <Typography level="title-lg">
-                {zona.title}
-              </Typography>
-              <Typography
-                startDecorator={<LocationOnRoundedIcon />}
-                color="neutral.300"
-              >
-                {zona.location}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
+              onClick={() => navigate(`/rutas/${ruta.id}`)}
+            >
+              <CardCover>
+                <img
+                  src={ruta.imageUrl}
+                  loading="lazy"
+                  alt={ruta.nombre}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.3s ease-in-out',
+                  }}
+                />
+              </CardCover>
+              <CardContent sx={{ justifyContent: 'flex-end' }}>
+                <Typography level="title-lg" textColor="#fff">
+                  {ruta.nombre}
+                </Typography>
+                <Typography textColor="neutral.300">Provincia: {ruta.provincia || 'Desconocido'}</Typography>
+                <Typography textColor="neutral.300">Dificultad: {ruta.dificultad || 'No especificado'}</Typography>
+                <Typography textColor="neutral.300">Distancia: {ruta.distancia || 'No especificada'} km</Typography>
+                <Typography textColor="neutral.300">Duración: {ruta.duracion || 'No especificada'} horas</Typography>
+                <FavoriteButton rutaId={ruta.id} />
+              </CardContent>
+            </Card>
+          </Grid>
+        ))
+      ) : (
+        <Typography>No hay rutas disponibles para esta provincia</Typography>
+      )}
     </Grid>
   );
 }

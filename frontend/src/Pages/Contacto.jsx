@@ -36,7 +36,6 @@ const Contacto = () => {
         const formErrors = validateForm();
         if (Object.keys(formErrors).length === 0) {
             setSubmitted(true);
-            // Aquí puedes añadir la lógica para enviar los datos a tu servidor o API.
             console.log('Form submitted:', formData);
         } else {
             setErrors(formErrors);

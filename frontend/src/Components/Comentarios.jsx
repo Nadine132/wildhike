@@ -3,11 +3,10 @@ import { Box, Typography, TextField, Button } from '@mui/material';
 import axios from 'axios';
 
 const Comentarios = ({ rutaId }) => {
-  const [comentarios, setComentarios] = useState([]); // Inicializa como un array vacío
+  const [comentarios, setComentarios] = useState([]);
   const [newComentario, setNewComentario] = useState('');
   const [page, setPage] = useState(1);
 
-  // Obtén el usuario desde el localStorage
 const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const userId = localStorage.getItem("userId");
       const comentarioData = {
         comentario: newComentario,
         ruta_id: rutaId,
-        usuario_id: userId || null, // Asegúrate de que user es correcto
+        usuario_id: userId || null,
       };
       
       console.log("Sending comentario data:", comentarioData);
@@ -60,16 +59,23 @@ const userId = localStorage.getItem("userId");
     }
   };
   
-  
   const handleDeleteComentario = async (comentarioId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/comentarios/${comentarioId}`);
-
-      // Recargar comentarios
-      const response = await axios.get(`http://localhost:3000/api/rutas/${rutaId}/comentarios`, {
-        params: { page }
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error("No token available");
+      }
+  
+      await axios.delete(`http://localhost:3000/api/comentarios/${comentarioId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-
+  
+      const response = await axios.get(`http://localhost:3000/api/rutas/${rutaId}/comentarios`, {
+        params: { page },
+      });
+  
       if (response.data && Array.isArray(response.data.rows)) {
         setComentarios(response.data.rows);
       } else {
@@ -77,9 +83,12 @@ const userId = localStorage.getItem("userId");
       }
     } catch (error) {
       console.error('Error al eliminar comentario:', error);
+      if (error.response) {
+        console.error("Detalles del error:", error.response.data);
+      }
     }
   };
-
+  
   return (
     <Box mt={4}>
       <Typography variant="h5" gutterBottom>
@@ -94,7 +103,7 @@ const userId = localStorage.getItem("userId");
             <Typography variant="body1" mt={1}>
               {comentario.comentario}
             </Typography>
-            {userId === comentario.usuario_id && (
+            {userId && userId == comentario.usuario_id && (
               <Button variant="outlined" color="secondary" onClick={() => handleDeleteComentario(comentario.id)}>
                 Eliminar
               </Button>
@@ -105,7 +114,6 @@ const userId = localStorage.getItem("userId");
         <Typography>No hay comentarios aún.</Typography>
       )}
 
-      {/* Agregar nuevo comentario */}
       <Box mt={3}>
         <Typography variant="h6" gutterBottom>
           Agregar un comentario

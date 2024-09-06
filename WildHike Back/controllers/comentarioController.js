@@ -52,6 +52,8 @@ exports.deleteComentario = async (req, res) => {
   const { id } = req.params;
   const usuario_id = req.user ? req.user.id : null;
 
+  console.log("Usuario autenticado en deleteComentario:", req.user);
+
   try {
     const comentario = await Comentario.findByPk(id);
 
@@ -59,16 +61,18 @@ exports.deleteComentario = async (req, res) => {
       return res.status(404).json({ message: "Comentario no encontrado" });
     }
 
-    if (comentario.usuario_id === usuario_id || !comentario.usuario_id) {
-      // El usuario puede eliminar su comentario o un comentario anónimo
+    if (comentario.usuario_id === usuario_id || req.user.rol === "admin") {
       await comentario.destroy();
-      res.status(204).send();
+      return res.status(204).send();
     } else {
-      res
+      return res
         .status(403)
         .json({ message: "No tienes permiso para eliminar este comentario" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error al eliminar el comentario", error });
+    console.error("Error al eliminar comentario:", error);
+    return res
+      .status(500)
+      .json({ message: "Error al eliminar el comentario", error });
   }
 };

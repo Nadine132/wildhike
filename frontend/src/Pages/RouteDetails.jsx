@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, CircularProgress, Grid, Paper, Button } from '@mui/material';
+import { Box, Typography, CircularProgress, Grid, Paper, Button, Checkbox } from '@mui/material';
 import ImageDetails from './ImageDetails';
 import MapView from '../Components/MapView';
 import FavoriteButton from '../Components/FavoriteButtom';
-import Comentarios from '../Components/Comentarios'; // Importa el componente Comentarios
+import Comentarios from '../Components/Comentarios';
 import axios from 'axios';
 
 const RouteDetails = () => {
@@ -13,7 +13,9 @@ const RouteDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [coords, setCoords] = useState(null);
-  const [user, setUser] = useState(null); // Simula la autenticación del usuario
+  const [user, setUser] = useState(null);
+  const [completed, setCompleted] = useState(false);
+
   useEffect(() => {
     const fetchRuta = async () => {
       setLoading(true);
@@ -32,20 +34,66 @@ const RouteDetails = () => {
           const { lat, lon } = geocodeResponse.data[0] || {};
           setCoords({ lat: parseFloat(lat), lng: parseFloat(lon) });
         }
+
+        const rutasRealizadasResponse = await axios.get('http://localhost:3000/api/rutas-realizadas', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        const isCompleted = rutasRealizadasResponse.data.some(
+          (rutaRealizada) => rutaRealizada.ruta_id === parseInt(id)
+        );
+        setCompleted(isCompleted);
+
       } catch (err) {
         setError('Error fetching data');
       } finally {
         setLoading(false);
       }
     };
-    // Simular la autenticación del usuario
+
     const fetchUser = () => {
-      // Simula un usuario logueado
       setUser({ id: 1, nombre: 'Usuario de Prueba' });
     };
     fetchRuta();
-    fetchUser(); // Simula la obtención de un usuario autenticado
+    fetchUser();
   }, [id]);
+
+  const handleToggleCompleted = async () => {
+    try {
+      if (completed) {
+        const rutasRealizadasResponse = await axios.get('http://localhost:3000/api/rutas-realizadas', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        const rutaRealizada = rutasRealizadasResponse.data.find(
+          (r) => r.ruta_id === parseInt(id)
+        );
+        if (rutaRealizada) {
+          await axios.delete(`http://localhost:3000/api/rutas-realizadas/${rutaRealizada.id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+          setCompleted(false);
+        }
+      } else {
+        await axios.post(
+          'http://localhost:3000/api/rutas-realizadas',
+          { ruta_id: id },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        );
+        setCompleted(true);
+      }
+    } catch (err) {
+      setError('Error al actualizar la ruta completada');
+    }
+  };
 
   if (loading) {
     return (
@@ -74,7 +122,7 @@ const RouteDetails = () => {
       </Box>
     );
   }
-  // Construir la URL de Google Maps en función de las coordenadas o el nombre
+
   const buildMapUrl = () => {
     if (ruta.coordenadas) {
       return `https://www.google.com/maps?q=${encodeURIComponent(ruta.coordenadas)}`;
@@ -84,23 +132,21 @@ const RouteDetails = () => {
       return '#';
     }
   };
+
   return (
     <Box p={3} sx={{ backgroundColor: '#E8F5E9' }}>
       <Typography variant="h4" gutterBottom align="center" sx={{ mb: 3 }}>
         {ruta.nombre}
       </Typography>
-      {/* Centraliza el botón de favoritos */}
       <Box display="flex" justifyContent="center" mb={2}>
         <FavoriteButton rutaId={ruta.id} />
       </Box>
       <Grid container spacing={4}>
-        {/* Sección de imágenes */}
         <Grid item xs={12} md={8}>
           <Box sx={{ marginY: 6 }}>
             <ImageDetails ruta_id={ruta.id} />
           </Box>
         </Grid>
-        {/* Sección de información de la ruta */}
         <Grid item xs={12} md={4}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="body1" paragraph>
@@ -134,18 +180,26 @@ const RouteDetails = () => {
                 Ver Localización
               </Button>
             </Box>
+            <Box mt={2}>
+              <Checkbox
+                checked={completed}
+                onChange={handleToggleCompleted}
+                color="primary"
+              />
+              <Typography>
+                {completed ? "Ruta marcada como completada" : "Marcar como completada"}
+              </Typography>
+            </Box>
           </Paper>
         </Grid>
       </Grid>
-      {/* Mapa */}
       {coords && (
         <Box sx={{ height: '400px', my: 4 }}>
           <MapView lat={coords.lat} lng={coords.lng} nombre={ruta.nombre} />
         </Box>
       )}
-      {/* Sección de comentarios */}
       <Box mt={4}>
-        <Comentarios rutaId={ruta.id} user={user} /> {/* Pasa el ID de la ruta y el usuario autenticado */}
+        <Comentarios rutaId={ruta.id} user={user} />
       </Box>
     </Box>
   );

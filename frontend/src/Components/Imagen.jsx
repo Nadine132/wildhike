@@ -7,12 +7,12 @@ export default function Imagen() {
     <Box className="primary" 
       sx={{ 
       
-        width: '100%',      // Ocupa todo el ancho
+        width: '100%',
         overflow: 'hidden', 
-        position: 'relative', // Relativo para evitar desbordamientos
-        top: 0,              // Colocado en la parte superior
-        left: 0,             // Alinea con el borde izquierdo de la pantalla
-        zIndex: -1,          // Envía el componente al fondo, detrás de otros elementos
+        position: 'relative',
+        top: 0,
+        left: 0,
+        zIndex: -1,
         p: 0 ,
         paddingTop: '200px',
         paddingBottom: '40px'
@@ -36,19 +36,19 @@ export default function Imagen() {
       <Box
         sx={{
           position: 'relative',
-          bottom: '20px',         // Coloca el texto en la parte inferior
-          left: '0px',          // Ajusta la distancia desde el borde izquierdo
-          color: 'white',        // Color del texto
+          bottom: '20px',
+          left: '0px',
+          color: 'white',
           padding: '10px',
           borderRadius: '5px',
-          maxWidth: '90%',       // Limita el ancho del contenedor del texto
-          boxSizing: 'border-box' // Incluye el padding en el ancho total
+          maxWidth: '90%',
+          boxSizing: 'border-box'
         }}
       >
         <p style={{ 
-          margin: 0,            // Elimina el margen por defecto
-          lineHeight: '1.4',    // Ajusta el espaciado entre líneas
-          textAlign: 'left',    // Alinea el texto a la izquierda
+          margin: 0,
+          lineHeight: '1.4',
+          textAlign: 'left',
           fontSize: '2rem'      
         }}>
           Descubre la ruta <br /> de tus sueños

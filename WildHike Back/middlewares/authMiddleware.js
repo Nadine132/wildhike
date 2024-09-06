@@ -1,23 +1,21 @@
-const { verifyToken, getUserFromToken } = require("../config/auth");
+const jwt = require("jsonwebtoken");
 
-const authMiddleware = async (req, res, next) => {
-  const token = req.headers["authorization"];
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) {
-    return res.status(401).json({ message: "No token provided." });
-  }
+  if (!token) return res.sendStatus(401);
 
-  try {
-    const user = await getUserFromToken(token);
-    if (!user) {
-      return res.status(401).json({ message: "Invalid token." });
-    }
-
-    req.user = user;
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = {
+      id: user.id,
+      rol: user.rol,
+      email: user.email,
+    };
+    console.log("Usuario autenticado:", req.user);
     next();
-  } catch (error) {
-    return res.status(500).json({ message: "Failed to authenticate token." });
-  }
+  });
 };
 
-module.exports = authMiddleware;
+module.exports = authenticateToken;

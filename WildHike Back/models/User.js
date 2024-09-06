@@ -25,14 +25,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
+      rol: {
+        type: DataTypes.ENUM("user", "admin"),
+        defaultValue: "user",
+      },
     },
     {
-      tableName: "Usuarios", // Especifica el nombre exacto de la tabla
-      timestamps: false, // Desactiva la creación automática de createdAt y updatedAt
+      tableName: "Usuarios",
+      timestamps: false,
     }
   );
 
-  // Antes de guardar el usuario, hashea la contraseña si ha sido modificada
   User.beforeCreate(async (user, options) => {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
@@ -45,7 +48,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  // Método para comparar contraseñas
   User.prototype.validatePassword = async function (password) {
     return bcrypt.compare(password, this.password);
   };

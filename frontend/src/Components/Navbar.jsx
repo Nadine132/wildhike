@@ -113,11 +113,11 @@ export default function PersistentDrawerLeft() {
           </Typography>
           {isLoggedIn ? (
             <IconButton onClick={handleLogout} edge="end" sx={{ color: 'black' }}>
-              <LoginIcon /> {/* Icono para cerrar sesión */}
+              <LoginIcon />
             </IconButton>
           ) : (
             <IconButton component={Link} to="/" edge="end" sx={{ color: 'black' }}>
-              <AccountCircleIcon /> {/* Icono para iniciar sesión */}
+              <AccountCircleIcon />
             </IconButton>
           )}
         </Toolbar>
@@ -143,14 +143,14 @@ export default function PersistentDrawerLeft() {
         <Divider />
         <List>
           {routes.map((text, index) => (
-            (index < 3 || isLoggedIn) && ( // Solo mostrar la ruta de perfil si el usuario está autenticado
+            (index < 3 || isLoggedIn) && (
               <ListItem key={text} disablePadding>
                 <ListItemButton component={Link} to={routePath[index]}>
                   <ListItemIcon>
-                    {index === 0 && <HomeIcon />}            {/* Home */}
-                    {index === 1 && <ConnectWithoutContactIcon />}  {/* Contacto */}
-                    {index === 2 && <DirectionsWalkIcon />}  {/* Rutas */}
-                    {index === 3 && <AccountCircleIcon />}  {/* Perfil */}
+                    {index === 0 && <HomeIcon />}
+                    {index === 1 && <ConnectWithoutContactIcon />}
+                    {index === 2 && <DirectionsWalkIcon />}
+                    {index === 3 && <AccountCircleIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItemButton>
@@ -164,7 +164,7 @@ export default function PersistentDrawerLeft() {
         <DrawerHeader />
         <Outlet />
       </Main>
-      <Footer /> {/* Renderiza el footer */}
+      <Footer />
     </Box>
   );
 }

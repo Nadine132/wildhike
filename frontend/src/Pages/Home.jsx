@@ -1,45 +1,55 @@
-import React from 'react';
-import Imagen from '../Components/Imagen';
-import { Box, Typography } from '@mui/material';
-import CardGrid from '../Components/CardGrid';
-import Zonas from '../Components/Zonas';
-import ProvinciaSelect from '../Components/Select';  // Importa el nuevo componente
-
+import React, { useState } from "react";
+import Imagen from "../Components/Imagen";
+import { Box, Typography } from "@mui/material";
+import CardGrid from "../Components/CardGrid";
+import Zonas from "../Components/Zonas";
+import ProvinceSelector from "../Components/ProvinceSelector";
 function Home() {
+  const [routes, setRoutes] = useState([]);
+  const handleRoutesFetched = (fetchedRoutes) => {
+    setRoutes(fetchedRoutes);
+  };
+
   return (
     <div>
-      {/* Contenedor de la imagen */}
-      <Box sx={{ position: 'relative', flexGrow: 1, width: '100%', overflowX: 'hidden' }}>
-        <Imagen />    {/* Renderiza la imagen */}
+      <Box
+        sx={{
+          position: "relative",
+          flexGrow: 1,
+          width: "100%",
+          overflowX: "hidden",
+        }}
+      >
+        <Imagen />
       </Box>
-      
-      {/* Contenedor del select */}
+
       <Box sx={{ marginTop: 2, padding: 2 }}>
-        <ProvinciaSelect /> {/* Renderiza el componente select */}
+        <ProvinceSelector onRoutesFetched={handleRoutesFetched} />{" "}
       </Box>
-      
 
-        {/* Espacio entre secciones */}
-        <Box sx={{ marginTop: 2 }}>
-          {/* Título "Zonas" */}
-          <Typography variant="h4" component="h2" align="center"   sx={{ marginBottom: 2 }}>
-            Zonas
-          </Typography>
+      <Box sx={{ marginTop: 2 }}>
+        <Typography
+          variant="h4"
+          component="h2"
+          align="center"
+          sx={{ marginBottom: 2 }}
+        >
+          Zonas
+        </Typography>
 
-          {/* Contenedor para las zonas */}
-          <Zonas />  {/* Renderiza las zonas */}
-        </Box>
+        <Zonas rutas={routes} />
+      </Box>
 
-      {/* Contenedor de las recomendaciones y las tarjetas */}
       <Box sx={{ marginTop: 6, padding: 2, marginBottom: 10 }}>
-        {/* Texto "Recomendaciones" */}
-        <Typography variant="h4" component="h2" align="center" sx={{ marginBottom: 2 }}>
+        <Typography
+          variant="h4"
+          component="h2"
+          align="center"
+          sx={{ marginBottom: 2 }}
+        >
           Recomendaciones
         </Typography>
-        
-        {/* Contenedor para las tarjetas */}
-        <CardGrid />  {/* Renderiza el grid de tarjetas */}
-
+        <CardGrid />
       </Box>
     </div>
   );

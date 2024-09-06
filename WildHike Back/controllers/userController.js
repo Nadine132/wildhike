@@ -30,15 +30,12 @@ exports.createUser = async (req, res) => {
   try {
     const { nombreDeUsuario, email, password, fechaRegistro, rol } = req.body;
 
-    // Hashear la contraseña antes de guardar
-    console.log("Contraseña antes de hashear:", password);
     const hashedPassword = await hashPassword(password);
-    console.log("Contraseña hasheada:", hashedPassword);
 
     const newUser = await User.create({
       nombreDeUsuario,
       email,
-      password: hashedPassword, // Guardamos la contraseña hasheada
+      password: hashedPassword,
       fechaRegistro,
       rol,
     });
@@ -50,17 +47,20 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// Actualizar un usuario por ID
+// Modificar usuario
 exports.updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { password, ...restOfBody } = req.body;
+    const { password, rol, ...restOfBody } = req.body;
 
-    // Si hay una contraseña en el cuerpo de la solicitud, hashearla
+    if (rol && req.user.rol !== "admin") {
+      return res.status(403).json({
+        message: "No tienes permiso para actualizar el rol de usuario.",
+      });
+    }
+
     if (password) {
-      console.log("Contraseña antes de actualizar:", password);
       restOfBody.password = await hashPassword(password);
-      console.log("Contraseña hasheada para actualizar:", restOfBody.password);
     }
 
     const [updated] = await User.update(restOfBody, { where: { id } });

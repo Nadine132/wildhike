@@ -4,7 +4,6 @@ import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import { Grid } from '@mui/material';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded'; // Unused import
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -28,7 +27,9 @@ export default function CardGrid() {
           return { ...ruta, imageUrl: firstImage ? firstImage.url_imagen : 'https://via.placeholder.com/300' };
         });
 
-        setRutasData(rutasConImagenes);
+        const rutasAleatorias = rutasConImagenes.sort(() => Math.random() - 0.5).slice(0, 4);
+
+        setRutasData(rutasAleatorias);
       } catch (error) {
         console.error('Error fetching rutas o imágenes:', error.message);
       } finally {
@@ -38,9 +39,7 @@ export default function CardGrid() {
     fetchData();
   }, []);
 
-  const handleFavoriteChange = () => {
-    // Aquí puedes manejar cambios en los favoritos si es necesario
-  };
+  const handleFavoriteChange = () => {};
 
   if (loading) {
     return <Typography>Cargando rutas de senderismo...</Typography>;
@@ -94,4 +93,3 @@ export default function CardGrid() {
     </Grid>
   );
 }
-

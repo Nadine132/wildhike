@@ -63,8 +63,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "Ruta", // Nombre de la tabla en la base de datos
-      timestamps: false, // Desactiva createdAt y updatedAt
+      tableName: "Ruta",
+      timestamps: false,
     }
   );
 

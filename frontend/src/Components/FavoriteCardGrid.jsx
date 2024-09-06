@@ -7,7 +7,7 @@ import { Grid } from '@mui/material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import FavoriteButton from './FavoriteButtom';// Reutiliza el botón de favoritos
+import FavoriteButton from './FavoriteButtom';
 
 export default function FavoriteCardGrid({ favoritos }) {
   const [rutasFavoritas, setRutasFavoritas] = useState([]);
@@ -22,11 +22,9 @@ export default function FavoriteCardGrid({ favoritos }) {
         const rutasResponses = await Promise.all(rutasPromises);
         const rutasData = rutasResponses.map(response => response.data);
 
-        // Obtener las galerías para las imágenes
         const galeriasResponse = await axios.get('http://localhost:3000/api/galerias');
         const galerias = galeriasResponse.data;
 
-        // Asignar las imágenes a las rutas favoritas
         const rutasConImagenes = rutasData.map(ruta => {
           const firstImage = galerias.find(image => image.ruta_id === ruta.id);
           return { 
@@ -44,9 +42,7 @@ export default function FavoriteCardGrid({ favoritos }) {
     fetchRutasFavoritas();
   }, [favoritos]);
 
-  const handleFavoriteChange = () => {
-    // Aquí puedes manejar cambios en los favoritos si es necesario
-  };
+  const handleFavoriteChange = () => {};
 
   return (
     <Grid container spacing={3} sx={{ justifyContent: 'center', maxWidth: '100%' }}>

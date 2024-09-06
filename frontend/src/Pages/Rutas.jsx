@@ -88,7 +88,7 @@ const Rutas = () => {
   return (
     <Box sx={{ padding: 2 }}>
       <Box sx={{ position: 'relative', flexGrow: 1, width: '100%', overflowX: 'hidden' }}>
-        <Imagen /> {/* Renderiza la imagen */}
+        <Imagen />
       </Box>
 
       <Typography variant="h4" gutterBottom align="center" marginBottom="50px" marginTop="30px">
@@ -123,7 +123,6 @@ const Rutas = () => {
                     <Typography variant="body2" color="text.secondary" align="center" sx={{ flexGrow: 1 }}>
                       {ruta.descripcion}
                     </Typography>
-                    {/* Centramos el botón de favoritos */}
                     <Box display="flex" justifyContent="center" sx={{ mt: 1, mb: 2 }}>
                       <FavoriteButton rutaId={ruta.id} />
                     </Box>
