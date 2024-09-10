@@ -52,9 +52,8 @@ const RouteDetails = () => {
       }
     };
     
-    // Simula obtener el usuario, deberías reemplazarlo con tu autenticación real
     const fetchUser = () => {
-      const storedUser = localStorage.getItem('user_id'); // Asume que el user_id está guardado en localStorage tras autenticación
+      const storedUser = localStorage.getItem('user_id');
       setUser({ id: storedUser });
     };
 
@@ -63,7 +62,6 @@ const RouteDetails = () => {
   }, [id]);
 
   const handleToggleCompleted = async () => {
-    const userId = localStorage.getItem("userId");
     const userId = localStorage.getItem("userId");
     try {
       if (!user) {
@@ -93,10 +91,7 @@ const RouteDetails = () => {
           'http://localhost:3000/api/rutas-realizadas',{
             
             ruta_id: id,
-            usuario_id: userId,
-         ,
-            usuario_id: userId,
-          },
+            usuario_id: userId,},
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,

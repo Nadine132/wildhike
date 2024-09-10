@@ -1,4 +1,3 @@
-// Components/Select.jsx
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -12,7 +11,7 @@ export default function ProvinciaSelect({ onProvinciaChange }) {
   const handleChange = (event) => {
     const newProvincia = event.target.value;
     setProvincia(newProvincia);
-    onProvinciaChange(newProvincia); // Envía la provincia seleccionada al componente padre
+    onProvinciaChange(newProvincia);
   };
 
   const provinciasAndalucia = [
@@ -25,9 +24,9 @@ export default function ProvinciaSelect({ onProvinciaChange }) {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        width: '50%', // Ancho del 50% del contenedor padre
-        margin: '0 auto', // Centra el componente horizontalmente
-        marginTop: -2, // Ajusta el espacio superior
+        width: '50%',
+        margin: '0 auto',
+        marginTop: -2,
       }}
     >
       <FormControl fullWidth>
