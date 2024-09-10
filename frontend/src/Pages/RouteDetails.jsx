@@ -30,7 +30,7 @@ const RouteDetails = () => {
         if (data.nombre) {
           const geocodeResponse = await axios.get(
             `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(data.nombre)}&format=json`
-          );
+          ); 
           const { lat, lon } = geocodeResponse.data[0] || {};
           setCoords({ lat: parseFloat(lat), lng: parseFloat(lon) });
         }
@@ -64,6 +64,7 @@ const RouteDetails = () => {
 
   const handleToggleCompleted = async () => {
     const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userId");
     try {
       if (!user) {
         setError('Usuario no encontrado');
@@ -89,9 +90,11 @@ const RouteDetails = () => {
         }
       } else {
         await axios.post(
-          'http://localhost:3000/api/rutas-realizadas',
-          { 
+          'http://localhost:3000/api/rutas-realizadas',{
+            
             ruta_id: id,
+            usuario_id: userId,
+         ,
             usuario_id: userId,
           },
           {
