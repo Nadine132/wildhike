@@ -1,8 +1,11 @@
+// src/Components/ImageDetails.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Grid, Typography, CircularProgress } from '@mui/material';
+import { Typography, CircularProgress } from '@mui/material';
+import Slider from 'react-slick'; // Importa Slider de react-slick
 
-export default function ImageDetails({ruta_id}) {
+const ImageDetails = ({ ruta_id }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +20,6 @@ export default function ImageDetails({ruta_id}) {
     }
   };
 
-   console.log(images)
   useEffect(() => {
     fetchImages();
   }, []);
@@ -30,21 +32,38 @@ export default function ImageDetails({ruta_id}) {
     return <Typography>No se encontraron imágenes.</Typography>;
   }
 
+  // Configuración de slick carousel
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true, // Opcional: añade flechas de navegación
+  };
+
   return (
-    <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
-      {images.map((image) => (
-        image.ruta_id === ruta_id && ( 
-          <Grid item key={image.id}>
-            <div>
+    <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+      <Slider {...settings}>
+        {images.map((image) => (
+          image.ruta_id === ruta_id && (
+            <div key={image.id} style={{ padding: '10px', display: 'flex', justifyContent: 'center' }}>
               <img
                 src={image.url_imagen}
                 alt={`Imagen ${image.id}`}
-                style={{ width: '300px', height: 'auto' }}
+                style={{ 
+                  width: '100%', 
+                  height: 'auto', 
+                  maxHeight: '500px', // Ajusta la altura máxima
+                  objectFit: 'contain' 
+                }} 
               />
             </div>
-          </Grid>
-        )
-      ))}
-    </Grid>
+          )
+        ))}
+      </Slider>
+    </div>
   );
-}
+};
+
+export default ImageDetails;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, CircularProgress, Grid, Paper, Button, Checkbox } from '@mui/material';
+import { Box, Typography, CircularProgress, Grid, Paper, Button } from '@mui/material';
 import ImageDetails from './ImageDetails';
 import MapView from '../Components/MapView';
 import FavoriteButton from '../Components/FavoriteButtom';
@@ -12,7 +12,6 @@ const RouteDetails = () => {
   const [ruta, setRuta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [coords, setCoords] = useState(null);
   const [user, setUser] = useState(null);
   const [completed, setCompleted] = useState(false);
 
@@ -22,36 +21,24 @@ const RouteDetails = () => {
       setError(null);
       try {
         const response = await fetch(`http://localhost:3000/api/rutas/${id}`);
-        if (!response.ok) {
-          throw new Error('Error fetching data');
-        }
+        if (!response.ok) throw new Error('Error fetching data');
         const data = await response.json();
         setRuta(data);
-        if (data.nombre) {
-          const geocodeResponse = await axios.get(
-            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(data.nombre)}&format=json`
-          ); 
-          const { lat, lon } = geocodeResponse.data[0] || {};
-          setCoords({ lat: parseFloat(lat), lng: parseFloat(lon) });
-        }
 
         const rutasRealizadasResponse = await axios.get('http://localhost:3000/api/rutas-realizadas', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         const isCompleted = rutasRealizadasResponse.data.some(
           (rutaRealizada) => rutaRealizada.ruta_id === parseInt(id)
         );
         setCompleted(isCompleted);
-
       } catch (err) {
         setError('Error fetching data');
       } finally {
         setLoading(false);
       }
     };
-    
+
     const fetchUser = () => {
       const storedUser = localStorage.getItem('user_id');
       setUser({ id: storedUser });
@@ -71,32 +58,22 @@ const RouteDetails = () => {
 
       if (completed) {
         const rutasRealizadasResponse = await axios.get('http://localhost:3000/api/rutas-realizadas', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         const rutaRealizada = rutasRealizadasResponse.data.find(
           (r) => r.ruta_id === parseInt(id)
         );
         if (rutaRealizada) {
           await axios.delete(`http://localhost:3000/api/rutas-realizadas/${rutaRealizada.id}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           });
           setCompleted(false);
         }
       } else {
         await axios.post(
-          'http://localhost:3000/api/rutas-realizadas',{
-            
-            ruta_id: id,
-            usuario_id: userId,},
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
+          'http://localhost:3000/api/rutas-realizadas',
+          { ruta_id: id, usuario_id: userId },
+          { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
         );
         setCompleted(true);
       }
@@ -107,15 +84,15 @@ const RouteDetails = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
-        <CircularProgress />
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
+        <CircularProgress size={60} sx={{ color: '#00796b' }} />
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
         <Typography variant="h6" color="error" align="center">
           {error}
         </Typography>
@@ -125,7 +102,7 @@ const RouteDetails = () => {
 
   if (!ruta) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#E8F5E9' }}>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
         <Typography variant="h6" color="text.secondary" align="center">
           Ruta no encontrada.
         </Typography>
@@ -144,8 +121,8 @@ const RouteDetails = () => {
   };
 
   return (
-    <Box p={3} sx={{ backgroundColor: '#E8F5E9' }}>
-      <Typography variant="h4" gutterBottom align="center" sx={{ mb: 3 }}>
+    <Box p={3} sx={{ backgroundColor: '#e0f2f1', minHeight: '100vh' }}>
+      <Typography variant="h3" gutterBottom align="center" sx={{ mb: 4, fontWeight: 700, color: '#004d40' }}>
         {ruta.nombre}
       </Typography>
       <Box display="flex" justifyContent="center" mb={2}>
@@ -153,12 +130,12 @@ const RouteDetails = () => {
       </Box>
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
-          <Box sx={{ marginY: 6 }}>
+          <Box sx={{ mb: 6 }}>
             <ImageDetails ruta_id={ruta.id} />
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ p: 2 }}>
+          <Paper elevation={6} sx={{ p: 3, borderRadius: 2, boxShadow: 3, backgroundColor: '#ffffff' }}>
             <Typography variant="body1" paragraph>
               <strong>Provincia:</strong> {ruta.provincia}
             </Typography>
@@ -180,34 +157,30 @@ const RouteDetails = () => {
             <Typography variant="body1" paragraph>
               <strong>Desnivel:</strong> {ruta.desnivel} metros
             </Typography>
-            <Box display="flex" justifyContent="center" mt={2}>
+            <Box display="flex" flexDirection="column" alignItems="center" mt={2}>
               <Button
                 variant="contained"
                 href={buildMapUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
+                sx={{ borderRadius: 20, backgroundColor: '#00796b', '&:hover': { backgroundColor: '#004d40' }, mb: 2 }}
               >
                 Ver Localización
               </Button>
-            </Box>
-            <Box mt={2}>
-              <Checkbox
-                checked={completed}
-                onChange={handleToggleCompleted}
-                color="primary"
-              />
-              <Typography>
-                {completed ? "Ruta marcada como completada" : "Marcar como completada"}
-              </Typography>
+              <Button
+                variant="contained"
+                onClick={handleToggleCompleted}
+                sx={{ borderRadius: 20, backgroundColor: '#00796b', '&:hover': { backgroundColor: '#004d40' } }}
+              >
+                {completed ? "Desmarcar como completada" : "Marcar como completada"}
+              </Button>
             </Box>
           </Paper>
         </Grid>
       </Grid>
-      {coords && (
-        <Box sx={{ height: '400px', my: 4 }}>
-          <MapView lat={coords.lat} lng={coords.lng} nombre={ruta.nombre} />
-        </Box>
-      )}
+      <Box sx={{ height: '400px', my: 4, borderRadius: 2, overflow: 'hidden' }}>
+        <MapView nombre={ruta.nombre} /> {/* Pasa el nombre de la ruta a MapView */}
+      </Box>
       <Box mt={4}>
         <Comentarios rutaId={ruta.id} user={user} />
       </Box>
