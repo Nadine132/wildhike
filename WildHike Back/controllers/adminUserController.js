@@ -1,4 +1,5 @@
 const { User } = require("../models");
+const { Favorito } = require("../models");
 
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
@@ -26,17 +27,22 @@ const updateUser = async (req, res) => {
   }
 };
 
-// Eliminar un usuario
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
     const usuario = await User.findByPk(id);
+
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
+
+    await Favorito.destroy({ where: { usuario_id: id } });
+
     await usuario.destroy();
+
     res.status(204).send();
   } catch (error) {
+    console.error("Error eliminando el usuario:", error);
     res.status(500).json({ message: "Error eliminando el usuario", error });
   }
 };

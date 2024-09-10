@@ -1,4 +1,5 @@
 const { Ruta } = require("../models");
+const { Galeria } = require("../models");
 
 // Obtener todas las rutas
 const getAllRutas = async (req, res) => {
@@ -46,13 +47,22 @@ const updateRuta = async (req, res) => {
 const deleteRuta = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Verificar si la ruta existe
     const ruta = await Ruta.findByPk(id);
     if (!ruta) {
       return res.status(404).json({ message: "Ruta no encontrada" });
     }
+
+    // Eliminar los registros relacionados en la tabla Galeria
+    await Galeria.destroy({ where: { ruta_id: id } });
+
+    // Luego, eliminar la ruta
     await ruta.destroy();
+
     res.status(204).send();
   } catch (error) {
+    console.error("Error eliminando la ruta:", error);
     res.status(500).json({ message: "Error eliminando la ruta", error });
   }
 };

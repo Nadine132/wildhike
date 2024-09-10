@@ -51,16 +51,25 @@ const RouteDetails = () => {
         setLoading(false);
       }
     };
-
+    
+    // Simula obtener el usuario, deberías reemplazarlo con tu autenticación real
     const fetchUser = () => {
-      setUser({ id: 1, nombre: 'Usuario de Prueba' });
+      const storedUser = localStorage.getItem('user_id'); // Asume que el user_id está guardado en localStorage tras autenticación
+      setUser({ id: storedUser });
     };
+
     fetchRuta();
     fetchUser();
   }, [id]);
 
   const handleToggleCompleted = async () => {
+    const userId = localStorage.getItem("userId");
     try {
+      if (!user) {
+        setError('Usuario no encontrado');
+        return;
+      }
+
       if (completed) {
         const rutasRealizadasResponse = await axios.get('http://localhost:3000/api/rutas-realizadas', {
           headers: {
@@ -81,7 +90,10 @@ const RouteDetails = () => {
       } else {
         await axios.post(
           'http://localhost:3000/api/rutas-realizadas',
-          { ruta_id: id },
+          { 
+            ruta_id: id,
+            usuario_id: userId,
+          },
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,

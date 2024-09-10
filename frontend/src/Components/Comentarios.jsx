@@ -31,6 +31,11 @@ const userId = localStorage.getItem("userId");
 
   const handleAddComentario = async () => {
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error("No token available");
+      }
+  
       const comentarioData = {
         comentario: newComentario,
         ruta_id: rutaId,
@@ -39,9 +44,14 @@ const userId = localStorage.getItem("userId");
       
       console.log("Sending comentario data:", comentarioData);
       
-      await axios.post('http://localhost:3000/api/comentarios', comentarioData); 
+      await axios.post('http://localhost:3000/api/comentarios', comentarioData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }); 
+      
       setNewComentario('');
-  
+      
       const response = await axios.get(`http://localhost:3000/api/rutas/${rutaId}/comentarios`, {
         params: { page }
       });
@@ -58,6 +68,7 @@ const userId = localStorage.getItem("userId");
       }
     }
   };
+  
   
   const handleDeleteComentario = async (comentarioId) => {
     try {
