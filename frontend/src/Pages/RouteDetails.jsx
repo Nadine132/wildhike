@@ -84,7 +84,7 @@ const RouteDetails = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#e8f5e9' }}>
         <CircularProgress size={60} sx={{ color: '#00796b' }} />
       </Box>
     );
@@ -92,7 +92,7 @@ const RouteDetails = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#e8f5e9' }}>
         <Typography variant="h6" color="error" align="center">
           {error}
         </Typography>
@@ -102,7 +102,7 @@ const RouteDetails = () => {
 
   if (!ruta) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#f5f5f5' }}>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: '#e8f5e9' }}>
         <Typography variant="h6" color="text.secondary" align="center">
           Ruta no encontrada.
         </Typography>
@@ -121,7 +121,7 @@ const RouteDetails = () => {
   };
 
   return (
-    <Box p={3} sx={{ backgroundColor: '#e0f2f1', minHeight: '100vh' }}>
+    <Box p={3} sx={{ backgroundColor: '#e8f5e9', minHeight: '100vh' }}> {/* Color de fondo actualizado */}
       <Typography variant="h3" gutterBottom align="center" sx={{ mb: 4, fontWeight: 700, color: '#004d40' }}>
         {ruta.nombre}
       </Typography>
@@ -179,7 +179,7 @@ const RouteDetails = () => {
         </Grid>
       </Grid>
       <Box sx={{ height: '400px', my: 4, borderRadius: 2, overflow: 'hidden' }}>
-        <MapView nombre={ruta.nombre} /> {/* Pasa el nombre de la ruta a MapView */}
+        <MapView nombre={ruta.nombre} />
       </Box>
       <Box mt={4}>
         <Comentarios rutaId={ruta.id} user={user} />
