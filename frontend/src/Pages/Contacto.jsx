@@ -51,7 +51,7 @@ const Contacto = () => {
             color: 'white',
             textAlign: 'center'
         }}>
-            <h2>Te Contactamos</h2>
+            <h2 style={{ color: 'white' }}>Te Contactamos</h2>
             <p>Teléfono: <a href="tel:952667788" style={{ color: 'white', textDecoration: 'none' }}>952 667 788</a></p>
             <p>Email: <a href="mailto:wildhike@gmail.com" style={{ color: 'white', textDecoration: 'none' }}>wildhike@gmail.com</a></p>
             {submitted ? (
