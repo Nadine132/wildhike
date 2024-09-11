@@ -1,41 +1,126 @@
+/* Estilo para el contenedor principal del gestor de usuarios */
 .admin-user-manager {
+  padding: 30px;
+  background-color: #ffffff; /* Fondo blanco para mayor contraste */
+  border-radius: 12px; /* Bordes redondeados */
+  max-width: 1000px; /* Ancho máximo */
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-user-manager:hover {
+  transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra más profunda */
+}
+
+/* Estilos para la tabla de usuarios */
+.user-table {
+  width: 100%;
+  border-collapse: collapse; /* Colapsar bordes */
+  background-color: #fff; /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  overflow: hidden; /* Para aplicar bordes redondeados a toda la tabla */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombras sutiles */
+  margin-top: 20px;
+}
+
+/* Estilos para celdas y encabezados */
+.user-table th,
+.user-table td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 1.1em; /* Tamaño de fuente más grande */
+  color: #333; /* Color de texto más oscuro */
+}
+
+.user-table th {
+  background-color: #00796b; /* Fondo oscuro para los encabezados */
+  color: white; /* Texto blanco en los encabezados */
+  text-transform: uppercase; /* Texto en mayúsculas */
+}
+
+.user-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Color alternativo para filas */
+}
+
+.user-table tr:hover {
+  background-color: #f1f1f1; /* Efecto hover en filas */
+}
+
+/* Estilos para botones de acción */
+.edit-button,
+.delete-button,
+.cancel-button {
+  padding: 10px 20px; /* Mayor tamaño de los botones */
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px; /* Bordes redondeados */
+  color: white;
+  font-size: 1em; /* Tamaño de texto */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Botón de editar */
+.edit-button {
+  background-color: #00796b; 
+}
+
+.edit-button:hover {
+  background-color: #004d40; 
+}
+
+.edit-button:active {
+  background-color:#00332b; 
+  transform: translateY(2px); /* Efecto de clic */
+}
+
+/* Botón de eliminar */
+.delete-button {
+  background-color: #f44336; /* Rojo */
+}
+
+.delete-button:hover {
+  background-color: #d32f2f; /* Rojo más oscuro en hover */
+}
+
+.delete-button:active {
+  background-color: #c62828; /* Rojo más oscuro al hacer clic */
+  transform: translateY(2px); /* Efecto de clic */
+}
+
+/* Botón de cancelar */
+.cancel-button {
+  background-color: #808080; /* Gris */
+}
+
+.cancel-button:hover {
+  background-color: #666666; /* Gris más oscuro en hover */
+}
+
+.cancel-button:active {
+  background-color: #4d4d4d; /* Gris aún más oscuro al hacer clic */
+  transform: translateY(2px); /* Efecto de clic */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 600px) {
+  .admin-user-manager {
     padding: 20px;
+    max-width: 100%;
   }
-  
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
+
+  .user-table th,
+  .user-table td {
+    font-size: 0.9em; /* Texto más pequeño en dispositivos móviles */
   }
-  
-  .user-table th, .user-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .edit-button, .delete-button {
-    padding: 5px 10px;
-    margin: 5px;
-    cursor: pointer;
-  }
-  
-  .edit-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-  }
-  
-  .delete-button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-  }
-  
+
+  .edit-button,
+  .delete-button,
   .cancel-button {
-    background-color: #808080;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
+    padding: 8px 16px; /* Botones más pequeños en móviles */
+    font-size: 0.9em;
   }
-  
+}

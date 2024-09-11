@@ -1,51 +1,84 @@
+/* AdminRutaPage.css */
+
+/* Contenedor principal del formulario */
 .admin-ruta-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 20px auto; /* Aumenté el margen superior para dar más espacio */
+  padding: 30px; /* Más espacio dentro del formulario */
+  background-color: #ffffff; /* Fondo blanco para mayor contraste */
+  border-radius: 10px; /* Bordes más redondeados */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombras más pronunciadas */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-ruta-form:hover {
+  transform: translateY(-5px); /* Añade un pequeño efecto de elevación al hacer hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombras más intensas en hover */
+}
+
+/* Grupo de campos del formulario */
+.form-group {
+  margin-bottom: 20px; /* Más espacio entre los campos */
+}
+
+.form-group label {
+  display: block;
+  font-size: 1.1em; /* Tamaño de fuente ligeramente más grande */
+  margin-bottom: 8px;
+  font-weight: 500; /* Texto más grueso para mayor legibilidad */
+  color: #00796b; /* Color del texto más distintivo */
+}
+
+/* Estilos para los inputs */
+.form-group input {
+  width: 100%;
+  padding: 12px; /* Más padding dentro del input */
+  font-size: 1.1em; /* Texto más grande */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Bordes más suaves */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #00796b; /* Color más oscuro y profesional */
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); /* Sombra alrededor del input en focus */
+  outline: none;
+}
+
+/* Botón de envío */
+.submit-btn {
+  padding: 12px 25px; /* Tamaño de botón más grande */
+  font-size: 1.1em; /* Texto más grande */
+  color: white;
+  background-color: #00796b; /* Color principal del botón */
+  border: none;
+  border-radius: 8px; /* Bordes más suaves */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #004d40; /* Color más oscuro en hover */
+  transform: translateY(-2px); /* Efecto de elevación en hover */
+}
+
+.submit-btn:active {
+  background-color: #00332b; /* Color aún más oscuro al hacer clic */
+  transform: translateY(0); /* Vuelve a su posición original */
+}
+
+/* Estilos responsive para pantallas pequeñas */
+@media (max-width: 600px) {
+  .admin-ruta-form {
     padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    font-size: 1em;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  .form-group input:focus {
-    border-color: #4CAF50;
-    outline: none;
-  }
-  
+
+  .form-group label,
+  .form-group input,
   .submit-btn {
-    padding: 10px 20px;
-    font-size: 1em;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 1em; /* Tamaños de texto más pequeños en móviles */
   }
-  
-  .submit-btn:hover {
-    background-color: #45a049;
-  }
-  
+}
