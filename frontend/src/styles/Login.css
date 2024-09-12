@@ -57,6 +57,8 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   margin-top: 10px;
+  width: 100%; /* Ambos botones ahora ocupan todo el ancho */
+  box-sizing: border-box;
 }
 
 .login-container button:hover {
@@ -72,7 +74,8 @@
 .login-container .register-btn {
   background-color: #f39c12;
   margin-top: 20px;
-  transition: background-color 0.3s, transform 0.2s;
+  width: 100%; /* Aseguramos que el botón de registro también ocupe el ancho completo */
+  box-sizing: border-box;
 }
 
 .login-container .register-btn:hover {

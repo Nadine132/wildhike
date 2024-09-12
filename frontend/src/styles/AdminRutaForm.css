@@ -1,76 +1,70 @@
-/* AdminRutaPage.css */
 
-/* Contenedor principal del formulario */
 .admin-ruta-form {
   display: flex;
   flex-direction: column;
   max-width: 500px;
-  margin: 20px auto; /* Aumenté el margen superior para dar más espacio */
-  padding: 30px; /* Más espacio dentro del formulario */
-  background-color: #ffffff; /* Fondo blanco para mayor contraste */
-  border-radius: 10px; /* Bordes más redondeados */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombras más pronunciadas */
+  margin: 20px auto; 
+  padding: 30px;
+  background-color: #ffffff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .admin-ruta-form:hover {
-  transform: translateY(-5px); /* Añade un pequeño efecto de elevación al hacer hover */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombras más intensas en hover */
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Grupo de campos del formulario */
 .form-group {
-  margin-bottom: 20px; /* Más espacio entre los campos */
+  margin-bottom: 20px; 
 }
 
 .form-group label {
   display: block;
-  font-size: 1.1em; /* Tamaño de fuente ligeramente más grande */
+  font-size: 1.1em; 
   margin-bottom: 8px;
-  font-weight: 500; /* Texto más grueso para mayor legibilidad */
-  color: #00796b; /* Color del texto más distintivo */
+  font-weight: 500; 
+  color: #00796b; 
 }
 
-/* Estilos para los inputs */
 .form-group input {
   width: 100%;
-  padding: 12px; /* Más padding dentro del input */
-  font-size: 1.1em; /* Texto más grande */
+  padding: 12px; 
+  font-size: 1.1em; 
   border: 1px solid #ccc;
-  border-radius: 8px; /* Bordes más suaves */
+  border-radius: 8px; 
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus {
-  border-color: #00796b; /* Color más oscuro y profesional */
-  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); /* Sombra alrededor del input en focus */
+  border-color: #00796b; 
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); 
   outline: none;
 }
 
-/* Botón de envío */
 .submit-btn {
-  padding: 12px 25px; /* Tamaño de botón más grande */
-  font-size: 1.1em; /* Texto más grande */
+  padding: 12px 25px; 
+  font-size: 1.1em; 
   color: white;
-  background-color: #00796b; /* Color principal del botón */
+  background-color: #00796b; 
   border: none;
-  border-radius: 8px; /* Bordes más suaves */
+  border-radius: 8px; 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .submit-btn:hover {
-  background-color: #004d40; /* Color más oscuro en hover */
-  transform: translateY(-2px); /* Efecto de elevación en hover */
+  background-color: #004d40; 
+  transform: translateY(-2px); 
 }
 
 .submit-btn:active {
-  background-color: #00332b; /* Color aún más oscuro al hacer clic */
-  transform: translateY(0); /* Vuelve a su posición original */
+  background-color: #00332b; 
+  transform: translateY(0); 
 }
 
-/* Estilos responsive para pantallas pequeñas */
 @media (max-width: 600px) {
   .admin-ruta-form {
     padding: 20px;
@@ -79,6 +73,6 @@
   .form-group label,
   .form-group input,
   .submit-btn {
-    font-size: 1em; /* Tamaños de texto más pequeños en móviles */
+    font-size: 1em; 
   }
 }

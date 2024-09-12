@@ -1,62 +1,58 @@
-/* Contenedor principal del formulario de usuario */
 .admin-user-form {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Mayor espacio entre los elementos del formulario */
-  max-width: 600px; /* Ancho máximo */
-  margin: 20px auto; /* Centrando el formulario */
-  padding: 25px; /* Espacio interno */
-  background-color: #ffffff; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombras para mayor profundidad */
+  gap: 15px; 
+  max-width: 600px; 
+  margin: 20px auto; 
+  padding: 25px; 
+  background-color: #ffffff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .admin-user-form:hover {
-  transform: translateY(-5px); /* Efecto de elevación en hover */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombras más intensas en hover */
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
 }
 
-/* Estilos para los inputs y selects del formulario */
 .admin-user-form input,
 .admin-user-form select {
-  padding: 12px; /* Más padding para mayor comodidad */
+  padding: 12px; 
   border: 1px solid #ccc;
-  border-radius: 6px; /* Bordes más redondeados */
-  font-size: 1.1em; /* Tamaño de texto más grande */
+  border-radius: 6px; 
+  font-size: 1.1em; 
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .admin-user-form input:focus,
 .admin-user-form select:focus {
-  border-color: #00796b; /* Color distintivo para focus */
-  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); /* Sombra suave alrededor del input */
-  outline: none; /* Elimina el borde por defecto */
+  border-color: #00796b; 
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); 
+  outline: none; 
 }
 
-/* Estilos para el botón de envío */
 .admin-user-form button {
-  padding: 12px 20px; /* Más espacio en el botón */
-  background-color: #00796b; /* Color principal del botón */
+  padding: 12px 20px; 
+  background-color: #00796b; 
   color: white;
-  font-size: 1.1em; /* Tamaño de texto más grande */
+  font-size: 1.1em; 
   border: none;
-  border-radius: 8px; /* Bordes redondeados */
+  border-radius: 8px; 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .admin-user-form button:hover {
-  background-color: #004d40; /* Color más oscuro en hover */
+  background-color: #004d40; 
 }
 
 .admin-user-form button:active {
-  background-color: #00332b; /* Color aún más oscuro al hacer clic */
-  transform: translateY(2px); /* Botón baja ligeramente al hacer clic */
+  background-color: #00332b; 
+  transform: translateY(2px); 
 }
 
-/* Responsive design: Ajuste en pantallas pequeñas */
 @media (max-width: 600px) {
   .admin-user-form {
     padding: 20px;
@@ -66,6 +62,6 @@
   .admin-user-form input,
   .admin-user-form select,
   .admin-user-form button {
-    font-size: 1em; /* Tamaño de texto más pequeño en móviles */
+    font-size: 1em; 
   }
 }

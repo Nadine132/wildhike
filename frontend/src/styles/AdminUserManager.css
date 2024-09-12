@@ -1,111 +1,103 @@
-/* Estilo para el contenedor principal del gestor de usuarios */
 .admin-user-manager {
   padding: 30px;
-  background-color: #ffffff; /* Fondo blanco para mayor contraste */
-  border-radius: 12px; /* Bordes redondeados */
-  max-width: 1000px; /* Ancho máximo */
+  background-color: #ffffff;
+  border-radius: 12px;
+  max-width: 1000px;
   margin: 0 auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .admin-user-manager:hover {
-  transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra más profunda */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Estilos para la tabla de usuarios */
 .user-table {
   width: 100%;
-  border-collapse: collapse; /* Colapsar bordes */
-  background-color: #fff; /* Fondo blanco */
-  border-radius: 8px; /* Bordes redondeados */
-  overflow: hidden; /* Para aplicar bordes redondeados a toda la tabla */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Sombras sutiles */
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
 }
 
-/* Estilos para celdas y encabezados */
 .user-table th,
 .user-table td {
   padding: 15px;
   border: 1px solid #ddd;
   text-align: left;
-  font-size: 1.1em; /* Tamaño de fuente más grande */
-  color: #333; /* Color de texto más oscuro */
+  font-size: 1.1em;
+  color: #333;
 }
 
 .user-table th {
-  background-color: #00796b; /* Fondo oscuro para los encabezados */
-  color: white; /* Texto blanco en los encabezados */
-  text-transform: uppercase; /* Texto en mayúsculas */
+  background-color: #00796b;
+  color: white;
+  text-transform: uppercase;
 }
 
 .user-table tr:nth-child(even) {
-  background-color: #f9f9f9; /* Color alternativo para filas */
+  background-color: #f9f9f9;
 }
 
 .user-table tr:hover {
-  background-color: #f1f1f1; /* Efecto hover en filas */
+  background-color: #f1f1f1;
 }
 
-/* Estilos para botones de acción */
 .edit-button,
 .delete-button,
 .cancel-button {
-  padding: 10px 20px; /* Mayor tamaño de los botones */
+  padding: 10px 20px;
   margin: 5px;
   cursor: pointer;
   border: none;
-  border-radius: 8px; /* Bordes redondeados */
+  border-radius: 8px;
   color: white;
-  font-size: 1em; /* Tamaño de texto */
+  font-size: 1em;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Botón de editar */
 .edit-button {
-  background-color: #00796b; 
+  background-color: #00796b;
 }
 
 .edit-button:hover {
-  background-color: #004d40; 
+  background-color: #004d40;
 }
 
 .edit-button:active {
-  background-color:#00332b; 
-  transform: translateY(2px); /* Efecto de clic */
+  background-color: #00332b;
+  transform: translateY(2px);
 }
 
-/* Botón de eliminar */
 .delete-button {
-  background-color: #f44336; /* Rojo */
+  background-color: #f44336;
 }
 
 .delete-button:hover {
-  background-color: #d32f2f; /* Rojo más oscuro en hover */
+  background-color: #d32f2f;
 }
 
 .delete-button:active {
-  background-color: #c62828; /* Rojo más oscuro al hacer clic */
-  transform: translateY(2px); /* Efecto de clic */
+  background-color: #c62828;
+  transform: translateY(2px);
 }
 
-/* Botón de cancelar */
 .cancel-button {
-  background-color: #808080; /* Gris */
+  background-color: #808080;
 }
 
 .cancel-button:hover {
-  background-color: #666666; /* Gris más oscuro en hover */
+  background-color: #666666;
 }
 
 .cancel-button:active {
-  background-color: #4d4d4d; /* Gris aún más oscuro al hacer clic */
-  transform: translateY(2px); /* Efecto de clic */
+  background-color: #4d4d4d;
+  transform: translateY(2px);
 }
 
-/* Ajustes responsivos */
 @media (max-width: 600px) {
   .admin-user-manager {
     padding: 20px;
@@ -114,13 +106,13 @@
 
   .user-table th,
   .user-table td {
-    font-size: 0.9em; /* Texto más pequeño en dispositivos móviles */
+    font-size: 0.9em;
   }
 
   .edit-button,
   .delete-button,
   .cancel-button {
-    padding: 8px 16px; /* Botones más pequeños en móviles */
+    padding: 8px 16px;
     font-size: 0.9em;
   }
 }
