@@ -65,7 +65,7 @@ function Register() {
       padding: '10px',
       fontSize: '16px',
       color: '#fff',
-      backgroundColor: '#45a049',
+      backgroundColor: '#004d40',
       border: 'none',
       borderRadius: '5px',
       cursor: 'pointer',

@@ -52,11 +52,11 @@ const AdminComentarioManager = () => {
   };
 
   if (loading) {
-    return <div>Cargando comentarios...</div>;
+    return <div className="loading">Cargando comentarios...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   return (

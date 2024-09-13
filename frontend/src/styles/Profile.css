@@ -30,8 +30,8 @@
   font-size: 2em;
   margin-top: 40px;
   margin-bottom: 20px;
-  color: #1e90ff;
-  border-bottom: 3px solid #1e90ff;
+  color: #00796b;
+  border-bottom: 3px solid #00796b;
   padding-bottom: 10px;
   font-weight: 500;
 }
@@ -55,5 +55,5 @@
 .profile-container p {
   text-align: center;
   font-size: 1.15em;
-  color: #666;
+  color: #e2e7ee;
 }

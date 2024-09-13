@@ -1,51 +1,78 @@
+
 .admin-ruta-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 20px auto; 
+  padding: 30px;
+  background-color: #ffffff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-ruta-form:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.form-group {
+  margin-bottom: 20px; 
+}
+
+.form-group label {
+  display: block;
+  font-size: 1.1em; 
+  margin-bottom: 8px;
+  font-weight: 500; 
+  color: #00796b; 
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px; 
+  font-size: 1.1em; 
+  border: 1px solid #ccc;
+  border-radius: 8px; 
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #00796b; 
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); 
+  outline: none;
+}
+
+.submit-btn {
+  padding: 12px 25px; 
+  font-size: 1.1em; 
+  color: white;
+  background-color: #00796b; 
+  border: none;
+  border-radius: 8px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #004d40; 
+  transform: translateY(-2px); 
+}
+
+.submit-btn:active {
+  background-color: #00332b; 
+  transform: translateY(0); 
+}
+
+@media (max-width: 600px) {
+  .admin-ruta-form {
     padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    font-size: 1em;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  .form-group input:focus {
-    border-color: #4CAF50;
-    outline: none;
-  }
-  
+
+  .form-group label,
+  .form-group input,
   .submit-btn {
-    padding: 10px 20px;
-    font-size: 1em;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 1em; 
   }
-  
-  .submit-btn:hover {
-    background-color: #45a049;
-  }
-  
+}

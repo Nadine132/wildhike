@@ -1,20 +1,67 @@
 .admin-user-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+  max-width: 600px; 
+  margin: 20px auto; 
+  padding: 25px; 
+  background-color: #ffffff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-user-form:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+}
+
+.admin-user-form input,
+.admin-user-form select {
+  padding: 12px; 
+  border: 1px solid #ccc;
+  border-radius: 6px; 
+  font-size: 1.1em; 
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-user-form input:focus,
+.admin-user-form select:focus {
+  border-color: #00796b; 
+  box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); 
+  outline: none; 
+}
+
+.admin-user-form button {
+  padding: 12px 20px; 
+  background-color: #00796b; 
+  color: white;
+  font-size: 1.1em; 
+  border: none;
+  border-radius: 8px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-user-form button:hover {
+  background-color: #004d40; 
+}
+
+.admin-user-form button:active {
+  background-color: #00332b; 
+  transform: translateY(2px); 
+}
+
+@media (max-width: 600px) {
+  .admin-user-form {
+    padding: 20px;
+    max-width: 100%;
   }
-  
-  .admin-user-form input, .admin-user-form select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+
+  .admin-user-form input,
+  .admin-user-form select,
   .admin-user-form button {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+    font-size: 1em; 
   }
-  
+}

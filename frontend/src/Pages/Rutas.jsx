@@ -91,11 +91,11 @@ const Rutas = () => {
         <Imagen />
       </Box>
 
-      <Typography variant="h4" gutterBottom align="center" marginBottom="50px" marginTop="30px">
+      <Typography variant="h4" gutterBottom align="center" sx={{ marginBottom: '50px', marginTop: '30px', color: '#00796b', fontWeight: 'bold' }}>
         Rutas
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={4}>
         {currentRutas.length > 0 ? (
           currentRutas.map((ruta) => {
             const firstImage = images.find((image) => image.ruta_id === ruta.id);
@@ -104,9 +104,11 @@ const Rutas = () => {
                 <Card
                   sx={{
                     height: '100%',
-                    transition: 'transform 0.3s ease-in-out',
+                    transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.1)',
                     '&:hover': {
                       transform: 'scale(1.05)',
+                      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
                     },
                   }}
                 >
@@ -114,23 +116,30 @@ const Rutas = () => {
                     component="img"
                     src={firstImage ? firstImage.url_imagen : 'https://via.placeholder.com/300'}
                     alt={ruta.nombre}
-                    sx={{ width: '100%', height: '200px', objectFit: 'cover' }}
+                    sx={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '12px 12px 0 0' }}
                   />
-                  <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Typography variant="h6" component="div" align="center">
+                  <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '24px' }}>
+                    <Typography variant="h6" component="div" align="center" sx={{ color: '#00796b', fontWeight: '600' }}>
                       {ruta.nombre}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" align="center" sx={{ flexGrow: 1 }}>
+                    <Typography variant="body2" color="text.secondary" align="center" sx={{ flexGrow: 1, marginTop: '10px', fontSize: '0.95rem' }}>
                       {ruta.descripcion}
                     </Typography>
-                    <Box display="flex" justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+                    <Box display="flex" justifyContent="center" sx={{ mt: 2, mb: 2 }}>
                       <FavoriteButton rutaId={ruta.id} />
                     </Box>
                     <Button
                       component={Link}
                       to={`/rutas/${ruta.id}`}
                       variant="contained"
-                      sx={{ mt: 2 }}
+                      sx={{
+                        mt: 2,
+                        backgroundColor: '#00796b',
+                        color: '#fff',
+                        '&:hover': { backgroundColor: '#004d40' },
+                        padding: '10px 20px',
+                        borderRadius: '8px',
+                      }}
                     >
                       Ver Detalles
                     </Button>
@@ -144,12 +153,22 @@ const Rutas = () => {
         )}
       </Grid>
 
-      <Box display="flex" justifyContent="center" marginTop={3}>
+      <Box display="flex" justifyContent="center" marginTop={4}>
         <Pagination
           count={Math.ceil(rutas.length / rutasPerPage)}
           page={page}
           onChange={handleChangePage}
           color="primary"
+          sx={{
+            '& .Mui-selected': {
+              backgroundColor: '#00796b !important',
+              color: '#fff',
+            },
+            '& .MuiPaginationItem-root:hover': {
+              backgroundColor: '#004d40',
+              color: '#fff',
+            },
+          }}
         />
       </Box>
     </Box>
