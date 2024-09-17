@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
-const SECRET_KEY = process.env.JWT_SECRET || "Ibiza202113"; // Aqui tienes que cambiar la contraseña, Nadine
+const SECRET_KEY = process.env.JWT_SECRET || "1234"; // Aqui tienes que cambiar la contraseña, Nadine
 
 const hashPassword = async (password) => {
   return bcrypt.hash(password, 10);

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Snackbar, Alert } from '@mui/material'; // Importa Snackbar y Alert de Material UI
 import "../styles/AdminComentarioManager.css";
 
 const AdminComentarioManager = () => {
   const [comentarios, setComentarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
     const fetchComentarios = async () => {
@@ -36,7 +38,7 @@ const AdminComentarioManager = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
-        alert('Comentario eliminado correctamente');
+        setSnackbar({ open: true, message: 'Comentario eliminado correctamente', severity: 'success' });
 
         const response = await axios.get('http://localhost:3000/api/admin/comentarios', {
           headers: {
@@ -46,9 +48,13 @@ const AdminComentarioManager = () => {
         setComentarios(response.data);
       } catch (error) {
         console.error('Error al eliminar el comentario:', error);
-        alert('Hubo un error al eliminar el comentario.');
+        setSnackbar({ open: true, message: 'Hubo un error al eliminar el comentario.', severity: 'error' });
       }
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   if (loading) {
@@ -91,6 +97,13 @@ const AdminComentarioManager = () => {
           ))}
         </tbody>
       </table>
+      
+      {/* Snackbar para mostrar mensajes de éxito o error */}
+      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

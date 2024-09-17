@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminRutaForm from './AdminRutaForm';
+import { Snackbar, Alert } from '@mui/material'; // Importa los componentes de Material UI
 import '../styles/AdminRutaManager.css';
 
 const AdminRutaManager = () => {
@@ -8,6 +9,7 @@ const AdminRutaManager = () => {
   const [selectedRuta, setSelectedRuta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
     const fetchRutas = async () => {
@@ -42,7 +44,7 @@ const AdminRutaManager = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
-        alert('Ruta eliminada correctamente');
+        setSnackbar({ open: true, message: 'Ruta eliminada correctamente', severity: 'success' });
         
         const response = await axios.get('http://localhost:3000/api/admin/rutas', {
           headers: {
@@ -52,7 +54,7 @@ const AdminRutaManager = () => {
         setRutas(response.data);
       } catch (error) {
         console.error('Error al eliminar la ruta:', error);
-        alert('Hubo un error al eliminar la ruta.');
+        setSnackbar({ open: true, message: 'Hubo un error al eliminar la ruta.', severity: 'error' });
       }
     }
   };
@@ -64,7 +66,7 @@ const AdminRutaManager = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      alert('Ruta actualizada correctamente');
+      setSnackbar({ open: true, message: 'Ruta actualizada correctamente', severity: 'success' });
       setSelectedRuta(null);
 
       const response = await axios.get('http://localhost:3000/api/admin/rutas', {
@@ -75,8 +77,12 @@ const AdminRutaManager = () => {
       setRutas(response.data);
     } catch (error) {
       console.error('Error al actualizar la ruta:', error);
-      alert('Hubo un error al actualizar la ruta.');
+      setSnackbar({ open: true, message: 'Hubo un error al actualizar la ruta.', severity: 'error' });
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   if (loading) {
@@ -127,6 +133,12 @@ const AdminRutaManager = () => {
           </table>
         </div>
       )}
+      {/* Snackbar para mostrar mensajes de éxito o error */}
+      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

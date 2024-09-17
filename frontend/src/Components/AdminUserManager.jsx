@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminUserForm from './AdminUserForm';
+import { Snackbar, Alert } from '@mui/material'; // Importamos Snackbar y Alert de Material UI
 import '../styles/AdminUserManager.css';
 
 const AdminUserManager = () => {
@@ -8,6 +9,7 @@ const AdminUserManager = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -42,7 +44,7 @@ const AdminUserManager = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
-        alert('Usuario eliminado correctamente');
+        setSnackbar({ open: true, message: 'Usuario eliminado correctamente', severity: 'success' });
         
         const response = await axios.get('http://localhost:3000/api/admin/usuarios', {
           headers: {
@@ -52,7 +54,7 @@ const AdminUserManager = () => {
         setUsers(response.data);
       } catch (error) {
         console.error('Error al eliminar el usuario:', error);
-        alert('Hubo un error al eliminar el usuario.');
+        setSnackbar({ open: true, message: 'Hubo un error al eliminar el usuario.', severity: 'error' });
       }
     }
   };
@@ -64,7 +66,7 @@ const AdminUserManager = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      alert('Usuario actualizado correctamente');
+      setSnackbar({ open: true, message: 'Usuario actualizado correctamente', severity: 'success' });
       setSelectedUser(null);
 
       const response = await axios.get('http://localhost:3000/api/admin/usuarios', {
@@ -75,8 +77,12 @@ const AdminUserManager = () => {
       setUsers(response.data);
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
-      alert('Hubo un error al actualizar el usuario.');
+      setSnackbar({ open: true, message: 'Hubo un error al actualizar el usuario.', severity: 'error' });
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   if (loading) {
@@ -125,6 +131,12 @@ const AdminUserManager = () => {
           </table>
         </div>
       )}
+      {/* Snackbar para mostrar mensajes de éxito o error */}
+      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
