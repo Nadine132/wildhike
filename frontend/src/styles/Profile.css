@@ -1,24 +1,40 @@
 .profile-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 40px;
+  background-color: #F5F5F5; /* Fondo claro para resaltar el contenido */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
-
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Ajuste de tamaño mínimo */
+  gap: 25px; /* Más espacio entre las tarjetas */
   justify-content: center;
+  padding: 20px; /* Espacio interno adicional */
 }
-
 .card-grid .MuiCard-root {
   width: 100%;
-  height: 500px;
+  height: 100%;
+  min-height: 400px; /* Altura mínima más pequeña para flexibilidad */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start; /* Contenido empieza arriba */
+  border-radius: 10px; /* Bordes redondeados */
+  overflow: hidden; /* Evitar desbordamiento de contenido */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación suave */
 }
-
+.card-grid .MuiCard-root:hover {
+  transform: translateY(-5px); /* Efecto de elevación */
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más fuerte al hacer hover */
+}
 .card-grid img {
   object-fit: cover;
+  height: 60%; /* Imagen ocupa el 60% de la tarjeta */
+  border-bottom: 2px solid #009688; /* Línea sutil debajo de la imagen */
+  transition: transform 0.3s ease; /* Animación al hacer hover */
+}
+.card-grid img:hover {
+  transform: scale(1.05); /* Efecto de zoom suave */
 }
