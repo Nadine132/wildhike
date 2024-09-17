@@ -20,13 +20,13 @@ const Contacto = () => {
 
     const validateForm = () => {
         let formErrors = {};
-        if (!formData.name) formErrors.name = 'Name is required';
+        if (!formData.name) formErrors.name = 'El nombre es obligatorio';
         if (!formData.email) {
-            formErrors.email = 'Email is required';
+            formErrors.email = 'El email es obligatorio';
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            formErrors.email = 'Email address is invalid';
+            formErrors.email = 'El correo electrónico es inválido';
         }
-        if (!formData.message) formErrors.message = 'Message is required';
+        if (!formData.message) formErrors.message = 'El mensaje es obligatorio';
 
         return formErrors;
     };
@@ -44,93 +44,122 @@ const Contacto = () => {
 
     return (
         <div style={{
-            backgroundImage: `url('https://images.pexels.com/photos/26860473/pexels-photo-26860473/free-photo-of-madera-ligero-carretera-paisaje.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            padding: '50px',
-            color: 'white',
-            textAlign: 'center'
+            backgroundColor: '#004d40',
+            padding: '40px',
+            minHeight: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
         }}>
-            <h2 style={{ color: 'white' }}>Te Contactamos</h2>
-            <p>Teléfono: <a href="tel:952667788" style={{ color: 'white', textDecoration: 'none' }}>952 667 788</a></p>
-            <p>Email: <a href="mailto:wildhike@gmail.com" style={{ color: 'white', textDecoration: 'none' }}>wildhike@gmail.com</a></p>
-            {submitted ? (
-                <div className="thank-you-message">
-                    <h3>Gracias por contactar con nosotros!</h3>
-                    <p>Nos comunicaremos con usted.</p>
-                </div>
-            ) : (
-                <form onSubmit={handleSubmit} style={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                    padding: '20px',
-                    borderRadius: '10px',
-                    display: 'inline-block',
-                    maxWidth: '600px',
-                    width: '100%'
-                }}>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label>Nombre:</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            style={{
-                                width: '100%',
-                                padding: '8px',
-                                margin: '5px 0',
-                                borderRadius: '5px',
-                                border: 'none'
-                            }}
-                        />
-                        {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
+            <div style={{
+                width: '100%',
+                maxWidth: '500px',
+                backgroundColor: '#ffffff',
+                padding: '30px',
+                borderRadius: '15px',
+                boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.2)',
+            }}>
+                <h2 style={{ color: '#004d40', marginBottom: '20px' }}>Contáctanos</h2>
+                <p style={{ color: '#004d40', fontWeight: 'bold' }}>Teléfono: 
+                    <a href="tel:952667788" style={{ color: '#009688', textDecoration: 'none' }}> 952 667 788</a>
+                </p>
+                <p style={{ color: '#004d40', fontWeight: 'bold' }}>Email: 
+                    <a href="mailto:wildhike@gmail.com" style={{ color: '#009688', textDecoration: 'none' }}> wildhike@gmail.com</a>
+                </p>
+
+                {submitted ? (
+                    <div className="thank-you-message" style={{ marginTop: '30px', color: '#004d40' }}>
+                        <h3>¡Gracias por contactar con nosotros!</h3>
+                        <p>Nos comunicaremos con usted pronto.</p>
                     </div>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            style={{
-                                width: '100%',
-                                padding: '8px',
-                                margin: '5px 0',
-                                borderRadius: '5px',
-                                border: 'none'
-                            }}
-                        />
-                        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-                    </div>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label>Mensaje:</label>
-                        <textarea
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            rows="5"
-                            style={{
-                                width: '100%',
-                                padding: '8px',
-                                margin: '5px 0',
-                                borderRadius: '5px',
-                                border: 'none'
-                            }}
-                        />
-                        {errors.message && <p style={{ color: 'red' }}>{errors.message}</p>}
-                    </div>
-                    <button type="submit" style={{
-                        padding: '10px 15px',
-                        backgroundColor: '#28a745',
-                        color: 'white',
-                        border: 'none',
-                        cursor: 'pointer',
-                        borderRadius: '5px'
-                    }}>
-                        Enviar
-                    </button>
-                </form>
-            )}
+                ) : (
+                    <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{ color: '#004d40', fontWeight: 'bold' }}>Nombre:</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    margin: '5px 0',
+                                    borderRadius: '8px',
+                                    border: '2px solid #009688',
+                                    outline: 'none',
+                                    fontSize: '15px',
+                                    transition: 'border-color 0.3s',
+                                }}
+                                onFocus={(e) => e.target.style.borderColor = '#00796b'}
+                                onBlur={(e) => e.target.style.borderColor = '#009688'}
+                            />
+                            {errors.name && <p style={{ color: 'red', fontSize: '14px' }}>{errors.name}</p>}
+                        </div>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{ color: '#004d40', fontWeight: 'bold' }}>Email:</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    margin: '5px 0',
+                                    borderRadius: '8px',
+                                    border: '2px solid #009688',
+                                    outline: 'none',
+                                    fontSize: '15px',
+                                    transition: 'border-color 0.3s',
+                                }}
+                                onFocus={(e) => e.target.style.borderColor = '#00796b'}
+                                onBlur={(e) => e.target.style.borderColor = '#009688'}
+                            />
+                            {errors.email && <p style={{ color: 'red', fontSize: '14px' }}>{errors.email}</p>}
+                        </div>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{ color: '#004d40', fontWeight: 'bold' }}>Mensaje:</label>
+                            <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                rows="4"
+                                style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    margin: '5px 0',
+                                    borderRadius: '8px',
+                                    border: '2px solid #009688',
+                                    outline: 'none',
+                                    fontSize: '15px',
+                                    transition: 'border-color 0.3s',
+                                }}
+                                onFocus={(e) => e.target.style.borderColor = '#00796b'}
+                                onBlur={(e) => e.target.style.borderColor = '#009688'}
+                            />
+                            {errors.message && <p style={{ color: 'red', fontSize: '14px' }}>{errors.message}</p>}
+                        </div>
+                        <button type="submit" style={{
+                            width: '100%',
+                            padding: '12px',
+                            backgroundColor: '#004d40',
+                            color: 'white',
+                            border: 'none',
+                            cursor: 'pointer',
+                            borderRadius: '8px',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            transition: 'background-color 0.3s ease',
+                        }}
+                        onMouseOver={(e) => e.target.style.backgroundColor = '#009688'}
+                        onMouseOut={(e) => e.target.style.backgroundColor = '#004d40'}
+                        >
+                            Enviar
+                        </button>
+                    </form>
+                )}
+            </div>
         </div>
     );
 };
